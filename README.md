@@ -27,5 +27,6 @@ my routine and might miss an exercise so having an app that I can use to track a
 
 - As a user, I want to be able to create a new exercise
 - As a user, I want to be able to add an exercise to a muscle group
-- As a user, I want to be able to create a schedule of muscle groups I want to hit on each day throughout the week. 
-- As a user, I want to be able to edit my workout schedule
+- As a user, I want to be able to select which muscle groups to hit today
+- As a user, I want to be able to view a list of all exercises I am doing today along with the sets and reps
+- As a user, I want to edit the amount of reps and sets in an exercise
