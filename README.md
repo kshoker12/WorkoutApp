@@ -23,3 +23,9 @@ This app will allow users to never forget an exercise and will assist them in ac
 *This project interests me because I workout, and sometimes struggle to remember and keep track of
 my routine and might miss an exercise so having an app that I can use to track and plan my workouts is ideal and makes working out a lot more convenient.*
 
+**User Story**
+
+- As a user, I want to be able to create a new exercise
+- As a user, I want to be able to add an exercise to a muscle group
+- As a user, I want to be able to create a schedule of muscle groups I want to hit on each day throughout the week. 
+- As a user, I want to be able to edit my workout schedule
