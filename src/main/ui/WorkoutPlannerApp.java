@@ -10,7 +10,6 @@ import java.util.Scanner;
 public class WorkoutPlannerApp {
 
     private Scanner input;
-    private List<Workout> todaysWorkout;
     private List<Exercise> availableWorkouts;
     private Boolean stop;
 
@@ -26,4 +25,11 @@ public class WorkoutPlannerApp {
 
     // EFFECTS: Carries out the action which user has directed
     public void navigateUser() {}
+
+
+    // EFFECTS: Prints today's workout into the console
+    public void printWorkout() {
+
+    }
+
 }

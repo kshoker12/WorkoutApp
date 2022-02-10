@@ -7,24 +7,49 @@ import java.util.List;
 public class Workout {
 
     private List<Exercise> muscleGroup;
+    private String name;
+    private List<Workout> todaysWorkout;
 
 
-    public void Workout() {
-
+    public Workout(String name) {
+        muscleGroup = new ArrayList<>();
+        this.name = name;
     }
 
     // MODIFIES: this
     // EFFECTS: adds an exercise to a muscle group
     public void addExercise(Exercise e) {
-
+        muscleGroup.add(e);
     }
 
     // REQUIRES: The exercise given as input should already be in muscle group
     // MODIFIES: this
     // EFFECTS: Removes the given exercise from the muscle group
     public void removeExercise(Exercise e) {
+        muscleGroup.remove(e);
 
     }
 
+    // EFFECTS: gets the number of exercises in a workout
+    public int getSize() {
+        return muscleGroup.size();
+    }
 
+    // EFFECTS: gets the name of the muscle group
+    public String getName() {
+        return name;
+    }
+
+
+    // REQUIRES: integer representing index must be >= 0.
+    // EFFECTS: Returns the exercise at a given index in muscleGroup
+    public String getExerciseAtIndex(int r) {
+        return muscleGroup.get(r).getName();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: Sets the current workout to the selected muscle group
+    public void selectWorkout() {
+
+    }
 }
