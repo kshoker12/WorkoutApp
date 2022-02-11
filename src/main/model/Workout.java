@@ -31,8 +31,13 @@ public class Workout {
 
     //REQUIRES: an exercise name of an exercise inside the given muscle group
     //EFFECTS: returns an exercise with the same name as given string
-    public Exercise findExercise(String e) {
-        return null;  //stub
+    public Exercise findExercise(String i) {
+        for (Exercise e : muscleGroup) {
+            if (e.getName().equals(i)) {
+                return e;
+            }
+        }
+        return new Exercise("X", 1, 1);
     }
 
     // EFFECTS: gets the number of exercises in a workout

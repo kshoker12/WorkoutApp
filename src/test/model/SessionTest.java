@@ -72,8 +72,11 @@ public class SessionTest {
         back.addExercise(b3);
         back.addExercise(b4);
         testSession.addMuscleGroup(back);
-        assertEquals(b2, testSession.nextExercise());
-        assertEquals(b3, testSession.nextExercise());
+        assertEquals(b1, testSession.getExerciseAtIndex(0));
+        testSession.nextExercise();
+        assertEquals(b2, testSession.getExerciseAtIndex(0));
+        testSession.nextExercise();
+        assertEquals(b3, testSession.getExerciseAtIndex(0));
     }
 
     @Test

@@ -30,7 +30,7 @@ public class Session {
     public Exercise searchExercise(String exr) {
         Exercise falseExercise;
         for (Exercise e: sessionTracker) {
-            if (e.getName() == exr) {
+            if (e.getName().equals(exr)) {
                 return e;
             }
         }
@@ -40,9 +40,8 @@ public class Session {
 
     // MODIFIES: this
     // EFFECTS: Returns the next exercise in queue for the session
-    public Exercise nextExercise() {
+    public void nextExercise() {
         sessionTracker.remove(0);
-        return sessionTracker.get(0);
     }
 
     // MODIFIES: this
@@ -50,8 +49,7 @@ public class Session {
     public void addMuscleGroup(Workout mg) {
         int repeat = mg.getSize();
         for (int i = 0; i < repeat; i++) {
-            sessionTracker.add(mg.getExerciseAtIndex(0));
-            mg.removeExercise(mg.getExerciseAtIndex(0));
+            sessionTracker.add(mg.getExerciseAtIndex(i));
         }
     }
 
