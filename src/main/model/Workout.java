@@ -8,7 +8,6 @@ public class Workout {
 
     private List<Exercise> muscleGroup;
     private String name;
-    private List<Workout> todaysWorkout;
 
 
     public Workout(String name) {
@@ -30,6 +29,12 @@ public class Workout {
 
     }
 
+    //REQUIRES: an exercise name of an exercise inside the given muscle group
+    //EFFECTS: returns an exercise with the same name as given string
+    public Exercise findExercise(String e) {
+        return null;  //stub
+    }
+
     // EFFECTS: gets the number of exercises in a workout
     public int getSize() {
         return muscleGroup.size();
@@ -43,8 +48,8 @@ public class Workout {
 
     // REQUIRES: integer representing index must be >= 0.
     // EFFECTS: Returns the exercise at a given index in muscleGroup
-    public String getExerciseAtIndex(int r) {
-        return muscleGroup.get(r).getName();
+    public Exercise getExerciseAtIndex(int r) {
+        return muscleGroup.get(r);
     }
 
     // MODIFIES: this

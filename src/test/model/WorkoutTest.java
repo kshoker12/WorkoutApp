@@ -28,11 +28,11 @@ public class WorkoutTest {
         Exercise e1 = new Exercise("Angel and Devil", 3, 30);
         muscleGroup.addExercise(e1);
         assertEquals(1, muscleGroup.getSize());
-        assertEquals("Angel and Devil", muscleGroup.getExerciseAtIndex(0));
+        assertEquals(e1, muscleGroup.getExerciseAtIndex(0));
         Exercise e2 = new Exercise("Wide-grip Pull-Ups", 3, 10);
         muscleGroup.addExercise(e2);
         assertEquals(2, muscleGroup.getSize());
-        assertEquals("Wide-grip Pull-Ups", muscleGroup.getExerciseAtIndex(1));
+        assertEquals(e2, muscleGroup.getExerciseAtIndex(1));
     }
 
     @Test
@@ -44,8 +44,8 @@ public class WorkoutTest {
         assertEquals(2 , muscleGroup.getSize());
         muscleGroup.removeExercise(e1);
         assertEquals(1, muscleGroup.getSize());
-        assertEquals("Wide-grip Pull-Ups", muscleGroup.getExerciseAtIndex(0));
-        assertFalse("Angel and Devil" == muscleGroup.getExerciseAtIndex(0));
+        assertEquals(e2, muscleGroup.getExerciseAtIndex(0));
+        assertFalse(e1 == muscleGroup.getExerciseAtIndex(0));
         muscleGroup.removeExercise(e2);
         assertEquals(0, muscleGroup.getSize());
     }
