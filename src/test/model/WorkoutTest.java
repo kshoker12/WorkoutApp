@@ -19,8 +19,8 @@ public class WorkoutTest {
 
     @Test
     public void testConstructor() {
-       assertEquals(0, muscleGroup.getSize());
-       assertEquals("Back", muscleGroup.getName());
+        assertEquals(0, muscleGroup.getSize());
+        assertEquals("Back", muscleGroup.getName());
     }
 
     @Test
@@ -41,7 +41,7 @@ public class WorkoutTest {
         muscleGroup.addExercise(e1);
         Exercise e2 = new Exercise("Wide-grip Pull-Ups", 3, 10);
         muscleGroup.addExercise(e2);
-        assertEquals(2 , muscleGroup.getSize());
+        assertEquals(2, muscleGroup.getSize());
         muscleGroup.removeExercise(e1);
         assertEquals(1, muscleGroup.getSize());
         assertEquals(e2, muscleGroup.getExerciseAtIndex(0));
@@ -50,5 +50,23 @@ public class WorkoutTest {
         assertEquals(0, muscleGroup.getSize());
     }
 
-
+    @Test
+    public void testFindExercise() {
+        Workout back = new Workout("Back");
+        Exercise b1 = new Exercise("Wide-grip Pull-ups", 3, 10);
+        Exercise b2 = new Exercise("Barbell Rows", 3, 15);
+        Exercise b3 = new Exercise("Angel & Devil", 3, 30);
+        Exercise b4 = new Exercise("Deadlifts", 3, 5);
+        Exercise falseExercise = new Exercise("X", 1, 1);
+        back.addExercise(b1);
+        back.addExercise(b2);
+        back.addExercise(b3);
+        back.addExercise(b4);
+        assertEquals(b1, back.findExercise("Wide-grip Pull-ups"));
+        assertEquals(b2, back.findExercise("Barbell Rows"));
+        assertEquals(b3, back.findExercise("Angel & Devil"));
+        assertEquals(b4, back.findExercise("Deadlifts"));
+        assertEquals(b1, back.findExercise("lift"));
+        assertEquals(b1, back.findExercise("Drop"));
+    }
 }

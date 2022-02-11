@@ -26,16 +26,15 @@ public class Session {
     }
 
     // REQUIRES: given string as input must be an exercise in the session
-    // EFFECTS: returns the exercise with the given string as name
+    // EFFECTS: returns the exercise with the given string as name and if not found, returns the first item in session
+    // since there must be a return type but this case should never happen
     public Exercise searchExercise(String exr) {
-        Exercise falseExercise;
         for (Exercise e: sessionTracker) {
             if (e.getName().equals(exr)) {
                 return e;
             }
         }
-        falseExercise = new Exercise("X", 1, 1);
-        return falseExercise;
+        return sessionTracker.get(0);
     }
 
     // MODIFIES: this

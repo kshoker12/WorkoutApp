@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class SessionTest {
 
@@ -51,13 +52,19 @@ public class SessionTest {
         Exercise b2 = new Exercise("Barbell Rows", 3, 15);
         Exercise b3 = new Exercise("Angel & Devil", 3, 30);
         Exercise b4 = new Exercise("Deadlifts", 3, 5);
+        Exercise falseExercise = new Exercise("X", 1,1);
         back.addExercise(b1);
         back.addExercise(b2);
         back.addExercise(b3);
         back.addExercise(b4);
         testSession.addMuscleGroup(back);
         assertEquals(b1, testSession.searchExercise("Wide-grip Pull-ups"));
+        assertEquals(b2, testSession.searchExercise("Barbell Rows"));
+        assertEquals(b3, testSession.searchExercise("Angel & Devil"));
         assertEquals(b4, testSession.searchExercise("Deadlifts"));
+        assertEquals(b1, testSession.searchExercise("lift"));
+        assertEquals(b1, testSession.searchExercise("Drop"));
+
     }
 
     @Test

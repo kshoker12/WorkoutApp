@@ -37,7 +37,7 @@ public class Workout {
                 return e;
             }
         }
-        return new Exercise("X", 1, 1);
+        return muscleGroup.get(0);
     }
 
     // EFFECTS: gets the number of exercises in a workout
@@ -55,11 +55,5 @@ public class Workout {
     // EFFECTS: Returns the exercise at a given index in muscleGroup
     public Exercise getExerciseAtIndex(int r) {
         return muscleGroup.get(r);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: Sets the current workout to the selected muscle group
-    public void selectWorkout() {
-
     }
 }

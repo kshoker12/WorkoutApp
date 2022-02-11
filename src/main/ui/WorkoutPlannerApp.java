@@ -31,7 +31,7 @@ public class WorkoutPlannerApp {
 
     // EFFECTS: prints out the menu
     private void printMenu() {
-        System.out.println("Press A for Muscle Groups/Create Exercise");
+        System.out.println("Press A for Muscle Groups/Create and edit Exercise");
         System.out.println("Press B to add/remove an exercise from session");
         System.out.println("Press C to view current training session");
         System.out.println("Press D to Begin session");
@@ -234,7 +234,9 @@ public class WorkoutPlannerApp {
         }
     }
 
-    // EFFECTS: prints out exercises in a muscle group
+    // EFFECTS: prints out exercises in a muscle group and various operators can be applied such as
+    // Removing exercises from muscle groups and adding exercises from muscle groups, and also edit the number of sets
+    // and reps
     private void printExercise(Workout muscleGroup, String control) {
         int repeat = muscleGroup.getSize();
         System.out.println(muscleGroup.getName());
