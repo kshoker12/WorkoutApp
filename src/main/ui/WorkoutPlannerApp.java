@@ -8,7 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//App that keeps track of workout
+//App that can be used to create, edit, and remove workouts from various muscle groups and also add exercises to
+// a training session which can be used to track current workout session
 public class WorkoutPlannerApp {
 
     private Session sessionTracker;
@@ -25,11 +26,11 @@ public class WorkoutPlannerApp {
 
     // EFFECTS: prints out the welcome message to the console
     private void printWelcomeMessage() {
-        System.out.println("Welcome everyone, thank you for choosing Workout Planner!");
+        System.out.println("Welcome, thank you for choosing Workout Planner!");
         System.out.println("Choose one of the following four options...");
     }
 
-    // EFFECTS: prints out the menu
+    // EFFECTS: prints out the main menu
     private void printMenu() {
         System.out.println("");
         System.out.println("A -> Muscle Groups/Create + edit Exercise");
@@ -56,24 +57,25 @@ public class WorkoutPlannerApp {
         }
     }
 
-    // EFFECTS: Carries out the action which user has directed
+    // MODIFIES: this
+    // EFFECTS: Carries out the action which user has directed by calling the appropriate methods
     @SuppressWarnings("methodlength")
     private void navigateUser(String control) {
-        if (control.equals("a")) {
+        if (control.equals("A")) {
             printMuscleGroups(control);
-        } else if (control.equals("b")) {
+        } else if (control.equals("B")) {
             addOrRemoveMenu(control);
-        } else if (control.equals("c")) {
+        } else if (control.equals("C")) {
             printSession(control);
-        } else if (control.equals("d")) {
+        } else if (control.equals("D")) {
             System.out.println("Great selection! Start working Champ!");
             System.out.println("N -> First exercise");
             while (sessionTracker.getSessionSize() > 0) {
                 control = input.next();
                 control.toLowerCase();
                 System.out.println("N -> next exercise");
-                if (control.equals("n")) {
-                    printFirstExercise(sessionTracker.getExerciseAtIndex(0));
+                if (control.equals("N")) {
+                    printExercise(sessionTracker.getExerciseAtIndex(0));
                     if (sessionTracker.getSessionSize() > 0) {
                         sessionTracker.nextExercise();
                     }
@@ -81,20 +83,21 @@ public class WorkoutPlannerApp {
             }
             control = input.next();
             control.toLowerCase();
-            if (control.equals("n")) {
+            if (control.equals("N")) {
                 System.out.println("Great work champ! See you soon");
                 active = false;
             }
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: The session started and you can cycle through the session
-    private void printFirstExercise(Exercise first) {
+
+    // EFFECTS: prints out an exercise with its sets and reps
+    private void printExercise(Exercise first) {
         System.out.println(first.getName() + " : " + first.getSets() + " Sets : " + first.getReps() + " Reps");
     }
 
-    // EFFECTS: Menu where you can choose how to add or remove exercise
+    // MODIFIES: this
+    // EFFECTS: Menu where you can choose to edit, remove, or add workouts to the muscle groups
     private void addOrRemoveMenu(String control) {
         System.out.println("Plan your workout routine by either...");
         System.out.println("A -> Add an entire muscle group");
@@ -103,13 +106,13 @@ public class WorkoutPlannerApp {
         System.out.println("Z -> Go back");
         control = input.next();
         control.toLowerCase();
-        if (control.equals("a")) {
+        if (control.equals("A")) {
             addMuscleGroup(control);
-        } else if (control.equals("b")) {
+        } else if (control.equals("B")) {
             addToSession(control);
-        } else if (control.equals("c")) {
+        } else if (control.equals("C")) {
             removeFromSession(control);
-        } else if (control.equals("z")) {
+        } else if (control.equals("Z")) {
             navigateUser(control);
         }
 
@@ -143,19 +146,19 @@ public class WorkoutPlannerApp {
     //EFFECTS: Processes user input and applies printExerciseSession function
     //with the correct argument based on user input
     private void selectCategory(String control) {
-        if (control.equals("a")) {
+        if (control.equals("A")) {
             addExerciseSession(muscleGroups.get(0), control);
-        } else if (control.equals("b")) {
+        } else if (control.equals("B")) {
             addExerciseSession(muscleGroups.get(1), control);
-        } else if (control.equals("c")) {
+        } else if (control.equals("C")) {
             addExerciseSession(muscleGroups.get(2), control);
-        } else if (control.equals("d")) {
+        } else if (control.equals("D")) {
             addExerciseSession(muscleGroups.get(3), control);
-        } else if (control.equals("e")) {
+        } else if (control.equals("E")) {
             addExerciseSession(muscleGroups.get(4), control);
-        } else if (control.equals("f")) {
+        } else if (control.equals("F")) {
             addExerciseSession(muscleGroups.get(5), control);
-        } else if (control.equals("g")) {
+        } else if (control.equals("G")) {
             addExerciseSession(muscleGroups.get(6), control);
         } else {
             navigateUser(control);
@@ -171,7 +174,7 @@ public class WorkoutPlannerApp {
         System.out.println("Type out the exercise name you wish to add");
         System.out.println(muscleGroup.getName());
         for (int i = 0; i < repeat; i++) {
-            printFirstExercise(muscleGroup.getExerciseAtIndex(i));
+            printExercise(muscleGroup.getExerciseAtIndex(i));
         }
         control = input.next();
         Exercise add = muscleGroup.findExercise(control);
@@ -207,19 +210,19 @@ public class WorkoutPlannerApp {
 
     //EFFECTS: returns the muscle group corresponding to a given letter in menu
     private String mapLetterToMuscle(String control) {
-        if (control.equals("a")) {
+        if (control.equals("A")) {
             return "Chest";
-        } else if (control.equals("b")) {
+        } else if (control.equals("B")) {
             return "Back";
-        } else if (control.equals("c")) {
+        } else if (control.equals("C")) {
             return "Tricep";
-        } else if (control.equals("d")) {
+        } else if (control.equals("D")) {
             return "Bicep";
-        } else if (control.equals("e")) {
+        } else if (control.equals("E")) {
             return "Shoulder";
-        } else if (control.equals("f")) {
+        } else if (control.equals("F")) {
             return "Legs";
-        } else if (control.equals("g")) {
+        } else if (control.equals("G")) {
             return "Abs";
         }
         return "Invalid input";
@@ -239,26 +242,26 @@ public class WorkoutPlannerApp {
     @SuppressWarnings("methodlength")
     private void viewMuscleGroup(String control) {
         switch (control) {
-            case "a":
-                printExercise(muscleGroups.get(0), control);
+            case "A":
+                operateExercise(muscleGroups.get(0), control);
                 break;
-            case "b":
-                printExercise(muscleGroups.get(1), control);
+            case "B":
+                operateExercise(muscleGroups.get(1), control);
                 break;
-            case "c":
-                printExercise(muscleGroups.get(2), control);
+            case "C":
+                operateExercise(muscleGroups.get(2), control);
                 break;
-            case "d":
-                printExercise(muscleGroups.get(3), control);
+            case "D":
+                operateExercise(muscleGroups.get(3), control);
                 break;
-            case "e":
-                printExercise(muscleGroups.get(4), control);
+            case "E":
+                operateExercise(muscleGroups.get(4), control);
                 break;
-            case "f":
-                printExercise(muscleGroups.get(5), control);
+            case "F":
+                operateExercise(muscleGroups.get(5), control);
                 break;
-            case "g":
-                printExercise(muscleGroups.get(6), control);
+            case "G":
+                operateExercise(muscleGroups.get(6), control);
                 break;
             default:
                 navigateUser(control);
@@ -266,14 +269,13 @@ public class WorkoutPlannerApp {
         }
     }
 
-    // EFFECTS: prints out exercises in a muscle group and various operators can be applied such as
-    // Removing exercises from muscle groups and adding exercises from muscle groups, and also edit the number of sets
-    // and reps
-    private void printExercise(Workout muscleGroup, String control) {
+    // MODIFIES: this
+    // EFFECTS: carries out various functions on a muscle group such as adding, removing, editing a muscle group
+    private void operateExercise(Workout muscleGroup, String control) {
         int repeat = muscleGroup.getSize();
         System.out.println(muscleGroup.getName());
         for (int i = 0; i < repeat; i++) {
-            printFirstExercise(muscleGroup.getExerciseAtIndex(i));
+            printExercise(muscleGroup.getExerciseAtIndex(i));
         }
         System.out.println("R -> Remove exercise");
         System.out.println("A -> Add exercise");
@@ -281,13 +283,13 @@ public class WorkoutPlannerApp {
         System.out.println("Z -> Go back");
         control = input.next();
         control.toLowerCase();
-        if (control.equals("r")) {
+        if (control.equals("R")) {
             muscleGroup.removeExercise(getRidExercise(muscleGroup, control));
-            printExercise(muscleGroup, control);
-        } else if (control.equals("a")) {
+            operateExercise(muscleGroup, control);
+        } else if (control.equals("A")) {
             muscleGroup.addExercise(addExerciseMuscleGroup(control));
-            printExercise(muscleGroup,control);
-        } else if (control.equals("e")) {
+            operateExercise(muscleGroup,control);
+        } else if (control.equals("E")) {
             editExercise(muscleGroup, control);
         } else {
             printMuscleGroups(control);
@@ -307,7 +309,7 @@ public class WorkoutPlannerApp {
         System.out.println("Type new number of reps");
         int reps = input.nextInt();
         edit.setReps(reps);
-        printExercise(muscle, control);
+        operateExercise(muscle, control);
     }
 
 
@@ -324,7 +326,6 @@ public class WorkoutPlannerApp {
         return new Exercise(name, sets, reps);
     }
 
-    // REQUIRES: the input for control variable must be a real exercise name
     // MODIFIES: this
     // EFFECTS: removes an exercise from the muscle group
     public Exercise getRidExercise(Workout muscleGroup, String control) {
@@ -346,12 +347,13 @@ public class WorkoutPlannerApp {
     private void printSession(String control) {
         int repeat = sessionTracker.getSessionSize();
         for (int i = 0; i < repeat; i++) {
-            printFirstExercise(sessionTracker.getExerciseAtIndex(i));
+            printExercise(sessionTracker.getExerciseAtIndex(i));
         }
 
 
     }
 
+    //MODIFIES: this
     //EFFECTS: instantiates the pre-set muscle groups
     @SuppressWarnings("methodlength")
     private void initMuscleGroups() {

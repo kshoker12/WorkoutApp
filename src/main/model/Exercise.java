@@ -12,7 +12,7 @@ public class Exercise {
         this.reps = reps;
     }
 
-    // Requires: newSets > 0
+    // Requires: sets > 0
     // Modifies: this
     // Effects: Replaces the number of sets with the given number
     // of sets
@@ -20,7 +20,7 @@ public class Exercise {
         this.sets = sets;
     }
 
-    // Requires: newReps > 0
+    // Requires: reps > 0
     // Modifies: this
     // Effects: Replaces the number of reps with the given input
     public void setReps(int reps) {

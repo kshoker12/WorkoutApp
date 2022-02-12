@@ -18,6 +18,7 @@ public class Session {
         sessionTracker.add(e);
     }
 
+    // REQUIRES: exercise passed in as input should be in the session
     // MODIFIES: this
     // EFFECTS: Removes the given exercise from the session
     public void removeExerciseFromSession(Exercise e) {
@@ -25,9 +26,9 @@ public class Session {
 
     }
 
-    // REQUIRES: given string as input must be an exercise in the session
+    // REQUIRES: given string as input must be an exercise name in the session
     // EFFECTS: returns the exercise with the given string as name and if not found, returns the first item in session
-    // since there must be a return type but this case should never happen
+    // since there must be a return type but this case should never happen due to requires clause
     public Exercise searchExercise(String exr) {
         for (Exercise e: sessionTracker) {
             if (e.getName().equals(exr)) {
@@ -44,7 +45,7 @@ public class Session {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds an entire muscle group to the session
+    // EFFECTS: adds all exercises in the muscle group to the session
     public void addMuscleGroup(Workout mg) {
         int repeat = mg.getSize();
         for (int i = 0; i < repeat; i++) {

@@ -29,8 +29,9 @@ public class Workout {
 
     }
 
-    //REQUIRES: an exercise name of an exercise inside the given muscle group
-    //EFFECTS: returns an exercise with the same name as given string
+    //REQUIRES: string must be the name of an exercise already in the muscle group
+    //EFFECTS: returns an exercise with the same name as given string but returns the first exercise if
+    // not found but this case should never occur because of requires clause
     public Exercise findExercise(String i) {
         for (Exercise e : muscleGroup) {
             if (e.getName().equals(i)) {
