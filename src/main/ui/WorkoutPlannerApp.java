@@ -354,7 +354,7 @@ public class WorkoutPlannerApp {
     }
 
     //MODIFIES: this
-    //EFFECTS: instantiates the pre-set muscle groups
+    //EFFECTS: instantiates the pre-set muscle groups.
     @SuppressWarnings("methodlength")
     private void initMuscleGroups() {
         Workout back = new Workout("Back");
