@@ -3,6 +3,7 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -68,5 +69,21 @@ public class WorkoutTest {
         assertEquals(b4, back.findExercise("Deadlifts"));
         assertEquals(b1, back.findExercise("lift"));
         assertEquals(b1, back.findExercise("Drop"));
+    }
+
+    @Test
+    public void testSetExercises() {
+        List<Exercise> testExercise = new ArrayList<>();
+        Exercise b1 = new Exercise("Wide-grip Pull-ups", 3, 10);
+        Exercise b2 = new Exercise("Barbell Rows", 3, 15);
+        Exercise b3 = new Exercise("Angel & Devil", 3, 30);
+        Exercise b4 = new Exercise("Deadlifts", 3, 5);
+        testExercise.add(b1);
+        testExercise.add(b2);
+        testExercise.add(b3);
+        testExercise.add(b4);
+
+        muscleGroup.setExercises(testExercise);
+        assertEquals(4, muscleGroup.getSize());
     }
 }
