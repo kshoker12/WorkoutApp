@@ -1,4 +1,4 @@
-package persistence;
+package model;
 
 import model.Exercise;
 import model.Workout;

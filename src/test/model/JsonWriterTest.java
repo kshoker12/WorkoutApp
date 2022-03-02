@@ -1,10 +1,8 @@
-package persistence;
+package model;
 
-import com.sun.corba.se.spi.orbutil.threadpool.Work;
-import model.Exercise;
-import model.Routine;
-import model.Workout;
 import org.junit.jupiter.api.Test;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.io.IOException;
 import java.util.List;

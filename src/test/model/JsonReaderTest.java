@@ -1,13 +1,9 @@
-package persistence;
+package model;
 
-import model.Exercise;
-import model.Routine;
-import model.Workout;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
+import persistence.JsonReader;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
