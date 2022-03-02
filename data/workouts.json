@@ -1,0 +1,165 @@
+{
+    "name": "Karn's Workout",
+    "Routine": [
+        {
+            "name": "Chest",
+            "Exercises": [
+                {
+                    "reps": 5,
+                    "sets": 3,
+                    "name": "Bench Press"
+                },
+                {
+                    "reps": 30,
+                    "sets": 3,
+                    "name": "Push-Ups"
+                },
+                {
+                    "reps": 10,
+                    "sets": 3,
+                    "name": "Incline Bench Press"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Chest fly"
+                }
+            ]
+        },
+        {
+            "name": "Back",
+            "Exercises": [
+                {
+                    "reps": 10,
+                    "sets": 3,
+                    "name": "Wide-grip Pull-ups"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Barbell Rows"
+                },
+                {
+                    "reps": 30,
+                    "sets": 3,
+                    "name": "Angel & Devil"
+                },
+                {
+                    "reps": 5,
+                    "sets": 3,
+                    "name": "Deadlifts"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Dumbell Deadrows"
+                }
+            ]
+        },
+        {
+            "name": "Tricep",
+            "Exercises": [
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Dips"
+                },
+                {
+                    "reps": 20,
+                    "sets": 3,
+                    "name": "Close-grip Push-ups"
+                },
+                {
+                    "reps": 12,
+                    "sets": 3,
+                    "name": "Tricep Press"
+                }
+            ]
+        },
+        {
+            "name": "Bicep",
+            "Exercises": [
+                {
+                    "reps": 12,
+                    "sets": 3,
+                    "name": "Hammer Curl"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Chin-Ups"
+                },
+                {
+                    "reps": 12,
+                    "sets": 3,
+                    "name": "Barbell Curl"
+                }
+            ]
+        },
+        {
+            "name": "Shoulder",
+            "Exercises": [
+                {
+                    "reps": 12,
+                    "sets": 3,
+                    "name": "Shoulder Press"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Side Raise"
+                },
+                {
+                    "reps": 12,
+                    "sets": 3,
+                    "name": "Rear Delt Rows"
+                }
+            ]
+        },
+        {
+            "name": "Legs",
+            "Exercises": [
+                {
+                    "reps": 10,
+                    "sets": 3,
+                    "name": "Leg Press"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Squats"
+                },
+                {
+                    "reps": 12,
+                    "sets": 3,
+                    "name": "Calf Raises"
+                }
+            ]
+        },
+        {
+            "name": "Abs",
+            "Exercises": [
+                {
+                    "reps": 30,
+                    "sets": 3,
+                    "name": "Crunches"
+                },
+                {
+                    "reps": 30,
+                    "sets": 3,
+                    "name": "Leg Raises"
+                },
+                {
+                    "reps": 30,
+                    "sets": 3,
+                    "name": "Rotating Sit-Ups"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Sit-ups"
+                }
+            ]
+        }
+    ]
+}

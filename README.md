@@ -45,3 +45,7 @@ along with the sets and reps.
 - As a user, I want to be able to track my training session, exercise by exercise.
 - As a user, I want to be able to remove exercises from muscle groups.
 - As a user, I want to be able to remove exercises from my training session.
+- As a user, I want to be able to save my created muscle groups
+- As a user, I want to be able to load my created muscle groups
+- As a user, I want to be able to have a quit option for my menu
+- 

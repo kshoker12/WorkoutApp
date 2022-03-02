@@ -1,0 +1,35 @@
+{
+    "name": "Karn's Workout",
+    "Routine": [
+        {
+            "name": "Chest",
+            "Exercises": [
+                {
+                    "reps": 5,
+                    "sets": 3,
+                    "name": "Bench Press"
+                },
+                {
+                    "reps": 30,
+                    "sets": 3,
+                    "name": "Push-Ups"
+                }
+            ]
+        },
+        {
+            "name": "Back",
+            "Exercises": [
+                {
+                    "reps": 10,
+                    "sets": 3,
+                    "name": "Wide-grip Pull-ups"
+                },
+                {
+                    "reps": 15,
+                    "sets": 3,
+                    "name": "Barbell Rows"
+                }
+            ]
+        }
+    ]
+}

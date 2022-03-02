@@ -1,11 +1,15 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 // Represents an exercise with a name, sets, and reps
-public class Exercise {
+public class Exercise implements Writable {
     private String name;
     private int sets;
     private int reps;
 
+    // EFFECTS: creates an exercise with name and given sets and reps
     public Exercise(String name, int sets, int reps) {
         this.name = name;
         this.sets = sets;
@@ -43,7 +47,15 @@ public class Exercise {
         return name;
     }
 
-
+    @Override
+    // EFFECTS: returns the exercise as JSON object
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("sets", sets);
+        json.put("reps", reps);
+        return json;
+    }
 
 }
 
