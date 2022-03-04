@@ -20,9 +20,9 @@
                     "name": "Incline Bench Press"
                 },
                 {
-                    "reps": 15,
-                    "sets": 3,
-                    "name": "Chest fly"
+                    "reps": 10,
+                    "sets": 4,
+                    "name": "Chest Press"
                 }
             ]
         },
@@ -48,11 +48,6 @@
                     "reps": 5,
                     "sets": 3,
                     "name": "Deadlifts"
-                },
-                {
-                    "reps": 15,
-                    "sets": 3,
-                    "name": "Dumbell Deadrows"
                 }
             ]
         },
@@ -153,11 +148,6 @@
                     "reps": 30,
                     "sets": 3,
                     "name": "Rotating Sit-Ups"
-                },
-                {
-                    "reps": 15,
-                    "sets": 3,
-                    "name": "Sit-ups"
                 }
             ]
         }

@@ -5,6 +5,7 @@ import model.Workout;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+//Represents a class which supports the testing of JsonWriterTest and JsonReaderTest
 public class JsonTest {
 
     protected void checkWorkout(String name, Workout w, int size) {

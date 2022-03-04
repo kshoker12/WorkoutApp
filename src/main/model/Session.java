@@ -3,10 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+
+// Represents a workout session which includes muscle groups
 public class Session {
 
     private List<Exercise> sessionTracker;
 
+    //EFFECTS: creates an empty list of muscle groups
     public Session() {
         sessionTracker = new ArrayList<>();
 

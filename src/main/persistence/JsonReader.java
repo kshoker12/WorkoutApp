@@ -15,6 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
+//Created using the help of
+//https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+//By Paul Carter
+
+//Represents a class which is used to read console data from a Json file
 public class JsonReader {
     private String source;
 

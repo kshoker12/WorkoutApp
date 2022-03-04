@@ -10,6 +10,11 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.List;
 
+//Created using the help of
+//https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo.git
+//By Paul Carter
+
+// Represents a class which is used to write data by saving it to a json file
 public class JsonWriter {
     private static final int TAB = 4;
     private String destination;
