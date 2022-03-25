@@ -29,6 +29,11 @@ public class Session {
 
     }
 
+    // EFFECTS: returns exercises in session
+    public List<Exercise> getSessionTracker() {
+        return sessionTracker;
+    }
+
     // REQUIRES: given string as input must be an exercise name in the session
     // EFFECTS: returns the exercise with the given string as name and if not found, returns the first item in session
     // since there must be a return type but this case should never happen due to requires clause

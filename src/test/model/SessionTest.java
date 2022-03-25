@@ -42,7 +42,7 @@ public class SessionTest {
         testSession.removeExerciseFromSession(b2);
         assertEquals(1, testSession.getSessionSize());
         testSession.removeExerciseFromSession(b1);
-        assertEquals(0, testSession.getSessionSize());
+        assertEquals(0, testSession.getSessionTracker().size());
     }
 
     @Test

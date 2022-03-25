@@ -69,6 +69,7 @@ public class JsonReader {
         return workout;
     }
 
+    // EFFECTS: reads the exercise
     private Exercise readExercise(JSONObject e) {
         String name = e.getString("name");
         int reps = e.getInt("reps");

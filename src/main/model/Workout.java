@@ -47,7 +47,7 @@ public class Workout implements Writable {
                 return e;
             }
         }
-        return exercises.get(0);
+        return null;
     }
 
     // EFFECTS: gets the number of exercises in a workout

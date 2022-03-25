@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 //Represents a class which supports the testing of JsonWriterTest and JsonReaderTest
 public class JsonTest {
 
+    // EFFECTS: checks the workout
     protected void checkWorkout(String name, Workout w, int size) {
         assertEquals(w.getName(), name);
         assertEquals(w.getExercises().size(), size);
@@ -16,6 +17,7 @@ public class JsonTest {
         }
     }
 
+    // EFFECTS: checks if exercise is valid
     private void checkExercise(Exercise e, int i, Workout w) {
         if (w.getName() == "Chest") {
             if (i == 0) {

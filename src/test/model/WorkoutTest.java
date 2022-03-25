@@ -67,8 +67,8 @@ public class WorkoutTest {
         assertEquals(b2, back.findExercise("Barbell Rows"));
         assertEquals(b3, back.findExercise("Angel & Devil"));
         assertEquals(b4, back.findExercise("Deadlifts"));
-        assertEquals(b1, back.findExercise("lift"));
-        assertEquals(b1, back.findExercise("Drop"));
+        assertEquals(null, back.findExercise("lift"));
+        assertEquals(null, back.findExercise("Drop"));
     }
 
     @Test
