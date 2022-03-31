@@ -12,13 +12,13 @@ public class Session {
     //EFFECTS: creates an empty list of muscle groups
     public Session() {
         sessionTracker = new ArrayList<>();
-
     }
 
     // MODIFIES: this
     // EFFECTS: adds an exercise to the current session
     public void addExerciseToSession(Exercise e) {
         sessionTracker.add(e);
+        EventLog.getInstance().logEvent(new Event(" Added " + e.getName() + " to session"));
     }
 
     // REQUIRES: exercise passed in as input should be in the session
@@ -26,6 +26,7 @@ public class Session {
     // EFFECTS: Removes the given exercise from the session
     public void removeExerciseFromSession(Exercise e) {
         sessionTracker.remove(e);
+        EventLog.getInstance().logEvent(new Event(" Removed " + e.getName() + " from session"));
 
     }
 
@@ -49,15 +50,16 @@ public class Session {
     // MODIFIES: this
     // EFFECTS: Returns the next exercise in queue for the session
     public void nextExercise() {
+        EventLog.getInstance().logEvent(new Event("Finished Exercise " + sessionTracker.get(0).getName()));
         sessionTracker.remove(0);
     }
 
     // MODIFIES: this
     // EFFECTS: adds all exercises in the muscle group to the session
     public void addMuscleGroup(Workout mg) {
-        int repeat = mg.getSize();
-        for (int i = 0; i < repeat; i++) {
-            sessionTracker.add(mg.getExerciseAtIndex(i));
+        for (Exercise exercise: mg.getExercises()) {
+            sessionTracker.add(exercise);
+            EventLog.getInstance().logEvent(new Event(" Added " + exercise.getName() + " to session"));
         }
     }
 
@@ -70,6 +72,10 @@ public class Session {
     // EFFECTS: Returns Exercise at given index
     public Exercise getExerciseAtIndex(int r) {
         return sessionTracker.get(r);
+    }
+
+    public void printLog() {
+
     }
 
 }

@@ -24,6 +24,7 @@ public class Workout implements Writable {
     // EFFECTS: adds an exercise to a muscle group
     public void addExercise(Exercise e) {
         exercises.add(e);
+        EventLog.getInstance().logEvent(new Event(" Added " + e.getName() + " to " + getName()));
     }
 
     // REQUIRES: The exercise given as input should already be in muscle group
@@ -31,7 +32,7 @@ public class Workout implements Writable {
     // EFFECTS: Removes the given exercise from the muscle group
     public void removeExercise(Exercise e) {
         exercises.remove(e);
-
+        EventLog.getInstance().logEvent(new Event(" Removed " + e.getName() + " from " + getName()));
     }
 
     public void setExercises(List<Exercise> exercises) {

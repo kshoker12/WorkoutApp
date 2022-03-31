@@ -10,14 +10,14 @@ public class SessionMenuPanel extends JPanel {
     private JButton addExercisesButton;
     private JButton removeExerciseButton;
     private JButton goBackButton;
-    private WorkoutWindow mainFrame;
+    private WorkoutPlannerAppGUI mainFrame;
     private JPanel east;
     private CardLayout eastLayout;
     private SessionAddMusclePanel musclePanel;
     private SessionRemoveMusclePanel removeMusclePanel;
 
     // EFFECTS: constructs the session panel and all its buttons
-    public SessionMenuPanel(WorkoutWindow mainFrame, JPanel east, CardLayout eastLayout) {
+    public SessionMenuPanel(WorkoutPlannerAppGUI mainFrame, JPanel east, CardLayout eastLayout) {
         this.east = east;
         this.eastLayout = eastLayout;
         this.east.add(this, "Session Menu");

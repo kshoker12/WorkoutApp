@@ -24,6 +24,13 @@ public class Exercise implements Writable {
         this.sets = sets;
     }
 
+    public void editExercise(int sets, int reps) {
+        setReps(reps);
+        setSets(sets);
+        EventLog.getInstance().logEvent(new Event("Changed " + name + "'s sets to " + this.sets
+                + " and reps to " + this.reps));
+    }
+
     // Requires: reps > 0
     // Modifies: this
     // Effects: Replaces the number of reps with the given input

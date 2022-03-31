@@ -17,7 +17,6 @@ public class Routine implements Writable {
     public Routine(String name) {
         this.name = name;
         this.muscleGroups = new ArrayList<>();
-
     }
 
     // EFFECTS: returns the name of workout

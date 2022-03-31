@@ -38,4 +38,14 @@ public class ExerciseTest {
         e.setReps(20);
         assertEquals(20, e.getReps());
     }
+
+    @Test
+    public void testEditExercise() {
+        e.editExercise(4, 5);
+        assertEquals(4, e.getSets());
+        assertEquals(5, e.getReps());
+        e.editExercise(5, 7);
+        assertEquals(5, e.getSets());
+        assertEquals(7, e.getReps());
+    }
 }

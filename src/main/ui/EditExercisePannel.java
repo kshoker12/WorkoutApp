@@ -39,9 +39,10 @@ public class EditExercisePannel extends MuscleGroupPanel {
             public void actionPerformed(ActionEvent e) {
                 Exercise exercise = getWorkout().findExercise(exerciseName.getText());
                 if (exercise != null) {
-                    exercise.setReps(Integer.parseInt(exerciseReps.getText()));
-                    exercise.setSets(Integer.parseInt(exerciseSets.getText()));
+                    exercise.editExercise(Integer.parseInt(exerciseSets.getText()),
+                            Integer.parseInt(exerciseReps.getText()));
                 }
+
                 MuscleGroupPanel w = managerPanel.getPanelForWorkout(getWorkout());
                 MuscleGroupPanel r = managerPanel.getRemovePanel(getWorkout());
                 MuscleGroupPanel a = managerPanel.getAddPanel(getWorkout());

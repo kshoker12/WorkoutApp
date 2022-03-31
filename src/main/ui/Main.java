@@ -10,7 +10,7 @@ public class Main {
 
             @Override
             public void run() {
-                WorkoutWindow main = new WorkoutWindow();
+                WorkoutPlannerAppGUI main = new WorkoutPlannerAppGUI();
                 main.setVisible(true);
             }
         });

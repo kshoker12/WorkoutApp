@@ -1,5 +1,8 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -7,9 +10,6 @@ import java.awt.event.ActionListener;
 
 // Represents the panel which is displayed when the session ends
 public class EndSessionPanel extends JPanel {
-    private JLabel imagePanel;
-    private ImageIcon image;
-    private JButton quitSession;
 
     // EFFECTS: initializes the panel
     public EndSessionPanel() {
@@ -23,8 +23,8 @@ public class EndSessionPanel extends JPanel {
 
     // EFFECTS: initializes the image for the panel
     private void initImage() {
-        image = new ImageIcon("./data/cpsc-210-project-pic2.png");
-        imagePanel = new JLabel();
+        ImageIcon image = new ImageIcon("./data/cpsc-210-project-pic2.png");
+        JLabel imagePanel = new JLabel();
         imagePanel.setIcon(image);
         imagePanel.setIconTextGap(10);
         this.add(imagePanel);
@@ -32,13 +32,16 @@ public class EndSessionPanel extends JPanel {
 
     // EFFECTS: initializes the quit session button and the behaviour
     private void initQuitSession() {
-        quitSession = new JButton("Quit Session");
+        JButton quitSession = new JButton("Quit Session");
         quitSession.setPreferredSize(new Dimension(280,30));
         quitSession.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(quitSession);
         quitSession.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                for (Event next: EventLog.getInstance()) {
+                    System.out.println(next.toString() + "\n\n");
+                }
                 System.exit(0);
             }
         });

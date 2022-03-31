@@ -1,5 +1,7 @@
 package ui;
 
+import model.Event;
+import model.EventLog;
 import model.Routine;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -14,19 +16,15 @@ import java.io.IOException;
 // Represents the JMenuBar where we save and load routines
 public class File extends JMenuBar {
     private static final String JSON_STORE = "./data/workouts.json";
-    private JMenuItem save;
-    private JMenuItem load;
     private Routine routine;
-    private WorkoutWindow mainFrame;
-    private JMenu menu;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
+    private JMenu menu;
     private EastPanelManager panelManager;
 
     // EFFECTS: sets up the panel and all the menu items
-    public File(WorkoutWindow mainFrame, Routine routine, EastPanelManager panelManager) {
+    public File(Routine routine, EastPanelManager panelManager) {
         super();
-        this.mainFrame = mainFrame;
         this.panelManager = panelManager;
         menu = new JMenu("File");
         menu.setPreferredSize(new Dimension(60, 30));
@@ -34,7 +32,6 @@ public class File extends JMenuBar {
         menu.setBackground(Color.DARK_GRAY);
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
-        this.mainFrame.setJMenuBar(this);
         this.add(menu);
         this.routine = routine;
         initSave();
@@ -43,7 +40,7 @@ public class File extends JMenuBar {
 
     // EFFECTS: initializes the load menu item and its behaviour
     private void initLoad() {
-        load = new JMenuItem("Load");
+        JMenuItem load = new JMenuItem("Load");
         load.setPreferredSize(new Dimension(50, 20));
         load.setFont(new Font("Arial", Font.BOLD, 16));
         load.setMargin(new Insets(10, 10, 10, 10));
@@ -53,6 +50,8 @@ public class File extends JMenuBar {
             public void actionPerformed(ActionEvent e) {
                 panelManager.setRoutine(loadRoutine());
                 panelManager.repaintPanels();
+                EventLog.getInstance().logEvent(new Event("Loaded " + routine.getName() + " from "
+                        + JSON_STORE));
             }
         });
     }
@@ -72,7 +71,7 @@ public class File extends JMenuBar {
 
     // EFFECTS: initializes the load menu item and its behaviour
     private void initSave() {
-        save = new JMenuItem("Save");
+        JMenuItem save = new JMenuItem("Save");
         save.setPreferredSize(new Dimension(50, 20));
         save.setFont(new Font("Arial", Font.BOLD, 16));
         save.setMargin(new Insets(10, 10, 10, 10));
@@ -81,6 +80,7 @@ public class File extends JMenuBar {
             @Override
             public void actionPerformed(ActionEvent e) {
                 saveRoutine();
+                EventLog.getInstance().logEvent(new Event("Saved " + routine.getName() + " to " + JSON_STORE));
             }
         });
     }

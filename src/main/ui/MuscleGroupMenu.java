@@ -1,7 +1,5 @@
 package ui;
 
-import model.Routine;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,12 +15,12 @@ public class MuscleGroupMenu extends JPanel {
     private JButton legsButton;
     private JButton absButton;
     private JButton goBackButton;
-    private WorkoutWindow mainFrame;
+    private WorkoutPlannerAppGUI mainFrame;
     private JPanel east;
     private CardLayout eastLayout;
 
     // EFFECTS: creates the panel for muscle group menu and all the necessary buttons
-    public MuscleGroupMenu(WorkoutWindow mainFrame, JPanel east, CardLayout eastLayout) {
+    public MuscleGroupMenu(WorkoutPlannerAppGUI mainFrame, JPanel east, CardLayout eastLayout) {
         super(new GridLayout(7, 1, 10, 10));
         this.east = east;
         this.eastLayout = eastLayout;

@@ -12,8 +12,8 @@ import java.util.List;
 // Manages all the panels which can be displayed on the East of the Workout Window
 public class EastPanelManager {
     private List<MuscleGroupPanel> panels;
-    private JPanel east;
-    private CardLayout eastLayout;
+    private final JPanel east;
+    private final CardLayout eastLayout;
     private Routine routine;
     private List<MuscleGroupPanel> addPanels;
     private List<MuscleGroupPanel> removePanels;
