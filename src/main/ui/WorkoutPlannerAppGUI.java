@@ -5,13 +5,16 @@ import model.Event;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 //Represents the graphical interface of the app
 public class WorkoutPlannerAppGUI extends JFrame {
     private final Routine routine;
-    private EastPanelManager muscleGroupManagerPanel;
+    private EastPanelManager panelManager;
     private final CardLayout layoutEast;
     private final JPanel panelEast;
+    private WorkoutsMenu muscleGroupMenu;
 
     // EFFECTS: creates the JFrame, as well as necessary panels
     public WorkoutPlannerAppGUI() {
@@ -21,10 +24,10 @@ public class WorkoutPlannerAppGUI extends JFrame {
         panelEast = new JPanel(layoutEast);
         initMuscleGroups();
         setupPanel();
-        add(new MainMenuPanel(panelEast, layoutEast), BorderLayout.WEST);
+        initPanels();
+        add(new MainMenuPanel(this, muscleGroupMenu, panelEast, layoutEast), BorderLayout.WEST);
         add(panelEast, BorderLayout.EAST);
         panelEast.setVisible(true);
-        initPanels();
     }
 
     // EFFECTS: sets up the panels configurations
@@ -51,7 +54,7 @@ public class WorkoutPlannerAppGUI extends JFrame {
     private void initMainEastPanel() {
         JPanel blank = new JPanel();
         ImageIcon image = new ImageIcon("./data/cpsc-210-project-pic4.png");
-        panelEast.add(new EndSessionPanel(), "End Session");
+        initEndSessionPanel();
         JLabel label = new JLabel();
         label.setIconTextGap(10);
         label.setIcon(image);
@@ -60,33 +63,57 @@ public class WorkoutPlannerAppGUI extends JFrame {
         layoutEast.show(panelEast, "Go Back");
     }
 
+    // EFFECTS: sets up the end session panel
+    private void initEndSessionPanel() {
+        JPanel endSession = new JPanel(new GridLayout(1, 1, 10, 10));
+        panelEast.add(endSession, "End Session");
+        endSession.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
+        endSession.setPreferredSize(new Dimension(300, 400));
+        endSession.setBackground(Color.white);
+        ImageIcon image = new ImageIcon("./data/cpsc-210-project-pic2.png");
+        JLabel imagePanel = new JLabel();
+        imagePanel.setIcon(image);
+        imagePanel.setIconTextGap(10);
+        endSession.add(imagePanel);
+        JButton quitSession = new JButton("Quit Session");
+        quitSession.setPreferredSize(new Dimension(280,30));
+        quitSession.setFont(new Font("Arial",Font.BOLD, 20));
+        endSession.add(quitSession);
+        quitSession.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                dispose();
+            }
+        });
+    }
+
     // EFFECTS: initializes all the panels
     private void initPanels() {
+        initEastPanel();
         initMainEastPanel();
         initStateOne();
-        initEastPanel();
         initStateTwo();
         initFileMenu();
     }
 
     // EFFECTS: initializes the file menu
     private void initFileMenu() {
-        this.setJMenuBar(new File(routine, muscleGroupManagerPanel));
+        this.setJMenuBar(new File(routine, panelManager));
     }
 
     // EFFECTS: initializes the panel located in the east of JFrame
     private void initEastPanel() {
-        muscleGroupManagerPanel = new EastPanelManager(new Session(), routine, panelEast, layoutEast);
+        panelManager = new EastPanelManager(new Session(), routine, panelEast, layoutEast);
     }
 
     // EFFECTS: initializes the first state of panel
     private void initStateOne() {
-        new MuscleGroupMenu(this, panelEast, layoutEast);
+        muscleGroupMenu = new WorkoutsMenu(panelManager, panelEast, layoutEast,0);
     }
 
     // EFFECT: initializes the second state of panel
     private void initStateTwo() {
-        new SessionMenuPanel(this, panelEast, layoutEast);
+        new SessionEditPanel(muscleGroupMenu, panelEast, layoutEast);
     }
 
     // MODIFIES: this
@@ -136,7 +163,7 @@ public class WorkoutPlannerAppGUI extends JFrame {
 
     //EFFECTS: instantiate bicep muscle group
     private Workout initBicep() {
-        Workout bicep = new Workout("Bicep");
+        Workout bicep = new Workout("Biceps");
         Exercise bi1 = new Exercise("Hammer Curl", 3, 12);
         Exercise bi2 = new Exercise("Chin-Ups", 3, 15);
         Exercise bi3 = new Exercise("Barbell Curl", 3, 12);

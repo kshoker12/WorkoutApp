@@ -1,41 +1,30 @@
 package ui;
 
+import model.Exercise;
 import model.Routine;
 import model.Session;
 import model.Workout;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // Manages all the panels which can be displayed on the East of the Workout Window
 public class EastPanelManager {
-    private List<MuscleGroupPanel> panels;
     private final JPanel east;
     private final CardLayout eastLayout;
     private Routine routine;
-    private List<MuscleGroupPanel> addPanels;
-    private List<MuscleGroupPanel> removePanels;
-    private List<MuscleGroupPanel> editPanels;
-    private List<MuscleGroupPanel> sessionMuscleGroupAddPanels;
-    private Session session;
-    private ViewSessionPanel viewSessionPanel;
-    private LiveSessionPanel liveSessionPanel;
+    private final Session session;
 
     // EFFECTS: creates all the panels and also creates lists which hold each category of panels
     public EastPanelManager(Session session, Routine routine, JPanel east, CardLayout eastLayout) {
-        panels = new ArrayList<>();
-        addPanels = new ArrayList<>();
-        removePanels = new ArrayList<>();
-        editPanels = new ArrayList<>();
-        sessionMuscleGroupAddPanels = new ArrayList<>();
-        liveSessionPanel = new LiveSessionPanel(session, eastLayout, east, this);
         this.session = session;
         this.east = east;
         this.routine = routine;
         this.eastLayout = eastLayout;
-        viewSessionPanel = new ViewSessionPanel(session, east, eastLayout);
+        updateViewSessionPanel();
+        updateLiveSessionPanel();
         repaintPanels();
     }
 
@@ -60,267 +49,226 @@ public class EastPanelManager {
 
     // EFFECTS: initializes the view session panel
     public void updateViewSessionPanel() {
-        viewSessionPanel = new ViewSessionPanel(session, east, eastLayout);
+        JPanel viewSessionPanel = new JPanel(new GridLayout(7, 1, 10, 10));
+        east.add(viewSessionPanel, "View Session");
+        viewSessionPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
+        viewSessionPanel.setBackground(Color.LIGHT_GRAY);
+        viewSessionPanel.setPreferredSize(new Dimension(300, 400));
+        for (Exercise e: session.getSessionTracker()) {
+            JLabel j = new JLabel(e.getName() + " : " + e.getSets() + " Sets : " + e.getReps() + " Reps");
+            viewSessionPanel.add(j);
+            j.setFont(new Font("Arial", Font.ITALIC, 16));
+            j.setPreferredSize(new Dimension(280, 30));
+            j.setBackground(Color.lightGray);
+        }
+        JButton goBackButton = new JButton("Go Back");
+        goBackButton.setPreferredSize(new Dimension(280,30));
+        goBackButton.setFont(new Font("Arial",Font.BOLD, 20));
+        viewSessionPanel.add(goBackButton);
+        goBackButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                eastLayout.show(east, "Go Back");
+            }
+        });
     }
 
     // MODIFIES: this
     // EFFECTS: initializes all the panels for abs
     private void initAbsPanel() {
-        initAbsNormalPanel();
-        MuscleGroupPanel absAddPanel = new
-                AddExercisePanel(this, routine.getMuscleGroups().get(6), east, eastLayout);
-        east.add(absAddPanel, "Abs Add");
-        addPanels.add(absAddPanel);
-        MuscleGroupPanel absRemovePanel = new
-                RemoveExercisePanel(this, routine.getMuscleGroups().get(6), east, eastLayout);
-        east.add(absRemovePanel, "Abs Remove");
-        removePanels.add(absRemovePanel);
-        MuscleGroupPanel absEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(6), east, eastLayout);
-        east.add(absEditPanel, "Abs Edit");
-        editPanels.add(absEditPanel);
-        MuscleGroupPanel absAddSessionPanel =
-                new SessionMuscleGroupAddPanel(this, routine.getMuscleGroups().get(6), session, east, eastLayout);
-        east.add(absAddSessionPanel, "Abs Add Session");
-        sessionMuscleGroupAddPanels.add(absAddSessionPanel);
-        MuscleGroupPanel absSessionAddExercise =
-                new SessionAddExercisePanel(this, routine.getMuscleGroups().get(6), session, east, eastLayout);
-        east.add(absSessionAddExercise, "Abs Add Exercise");
-        MuscleGroupPanel absSessionRemoveExercise =
-                new SessionRemoveExercisePanel(this, routine.getMuscleGroups().get(6), session, east, eastLayout);
-        east.add(absSessionRemoveExercise, "Abs Remove Exercise");
-    }
-
-    // MODIFIES: east, panels
-    // EFFECTS: initializes the original abs panel
-    private void initAbsNormalPanel() {
-        MuscleGroupPanel absPanel = new
-                MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(6), east, eastLayout);
+        WorkoutsPanel absPanel = new
+                WorkoutManagerPanel(this, routine.getMuscleGroups().get(6), east, eastLayout);
         east.add(absPanel, "Abs");
-        panels.add(absPanel);
+        WorkoutsPanel absAddPanel = new
+                WorkoutsEditPanel(this, routine.getMuscleGroups().get(6), 0);
+        east.add(absAddPanel, "Abs Add");
+        WorkoutsPanel absRemovePanel = new
+                HandleExercisePanel(this, routine.getMuscleGroups().get(6), 0);
+        east.add(absRemovePanel, "Abs Remove");
+        WorkoutsPanel absEditPanel =
+                new WorkoutsEditPanel(this, routine.getMuscleGroups().get(6), 1);
+        east.add(absEditPanel, "Abs Edit");
+        WorkoutsPanel absAddSessionPanel =
+                new SessionAddPanel(this, routine.getMuscleGroups().get(6), session, east, eastLayout);
+        east.add(absAddSessionPanel, "Abs Add Session");
+        WorkoutsPanel absSessionAddExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(6), 2);
+        east.add(absSessionAddExercise, "Abs Add Exercise");
+        WorkoutsPanel absSessionRemoveExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(6), 1);
+        east.add(absSessionRemoveExercise, "Abs Remove Exercise");
     }
 
     // MODIFIES: this
     // EFFECTS: initializes all the panels for legs
     private void initLegsPanel() {
-        initLegNormalPanel();
-        MuscleGroupPanel addLegsPanel = new
-                AddExercisePanel(this, routine.getMuscleGroups().get(5), east, eastLayout);
-        east.add(addLegsPanel, "Legs Add");
-        addPanels.add(addLegsPanel);
-        MuscleGroupPanel legsRemovePanel = new
-                RemoveExercisePanel(this, routine.getMuscleGroups().get(5), east, eastLayout);
-        east.add(legsRemovePanel, "Legs Remove");
-        removePanels.add(legsRemovePanel);
-        MuscleGroupPanel legsEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(5), east, eastLayout);
-        east.add(legsEditPanel, "Legs Edit");
-        editPanels.add(legsEditPanel);
-        MuscleGroupPanel legsAddSessionPanel =
-                new SessionMuscleGroupAddPanel(this, routine.getMuscleGroups().get(5), session, east, eastLayout);
-        east.add(legsAddSessionPanel, "Legs Add Session");
-        sessionMuscleGroupAddPanels.add(legsAddSessionPanel);
-        MuscleGroupPanel legsSessionAddExercise =
-                new SessionAddExercisePanel(this, routine.getMuscleGroups().get(5), session, east, eastLayout);
-        east.add(legsSessionAddExercise, "Legs Add Exercise");
-        MuscleGroupPanel legsSessionRemoveExercise =
-                new SessionRemoveExercisePanel(this, routine.getMuscleGroups().get(5), session, east, eastLayout);
-        east.add(legsSessionRemoveExercise, "Legs Remove Exercise");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes the normal leg panel
-    private void initLegNormalPanel() {
-        MuscleGroupPanel legsPanel = new
-                MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(5), east, eastLayout);
+        WorkoutsPanel legsPanel = new
+                WorkoutManagerPanel(this, routine.getMuscleGroups().get(5), east, eastLayout);
         east.add(legsPanel, "Legs");
-        panels.add(legsPanel);
+        WorkoutsPanel addLegsPanel = new
+                WorkoutsEditPanel(this, routine.getMuscleGroups().get(5), 0);
+        east.add(addLegsPanel, "Legs Add");
+        WorkoutsPanel legsRemovePanel = new
+                HandleExercisePanel(this, routine.getMuscleGroups().get(5), 0);
+        east.add(legsRemovePanel, "Legs Remove");
+        WorkoutsPanel legsEditPanel =
+                new WorkoutsEditPanel(this, routine.getMuscleGroups().get(5), 1);
+        east.add(legsEditPanel, "Legs Edit");
+        WorkoutsPanel legsAddSessionPanel =
+                new SessionAddPanel(this, routine.getMuscleGroups().get(5), session, east, eastLayout);
+        east.add(legsAddSessionPanel, "Legs Add Session");
+        WorkoutsPanel legsSessionAddExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(5), 2);
+        east.add(legsSessionAddExercise, "Legs Add Exercise");
+        WorkoutsPanel legsSessionRemoveExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(5), 1);
+        east.add(legsSessionRemoveExercise, "Legs Remove Exercise");
     }
 
     // MODIFIES: this
     // EFFECTS: initializes all the panels for shoulders
     private void initShouldersPanel() {
-        initNormalShoulderPanel();
-        MuscleGroupPanel shouldersAddPanel = new
-                AddExercisePanel(this, routine.getMuscleGroups().get(4), east, eastLayout);
-        east.add(shouldersAddPanel, "Shoulders Add");
-        addPanels.add(shouldersAddPanel);
-        MuscleGroupPanel shouldersRemovePanel = new
-                RemoveExercisePanel(this, routine.getMuscleGroups().get(4), east, eastLayout);
-        east.add(shouldersRemovePanel, "Shoulders Remove");
-        removePanels.add(shouldersRemovePanel);
-        MuscleGroupPanel shouldersEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(4), east, eastLayout);
-        east.add(shouldersEditPanel, "Shoulders Edit");
-        editPanels.add(shouldersEditPanel);
-        MuscleGroupPanel shoulderAddSessionPanel =
-                new SessionMuscleGroupAddPanel(this, routine.getMuscleGroups().get(4), session, east, eastLayout);
-        east.add(shoulderAddSessionPanel, "Shoulders Add Session");
-        sessionMuscleGroupAddPanels.add(shoulderAddSessionPanel);
-        MuscleGroupPanel shouldersSessionAddExercise =
-                new SessionAddExercisePanel(this, routine.getMuscleGroups().get(4), session, east, eastLayout);
-        east.add(shouldersSessionAddExercise, "Shoulders Add Exercise");
-        MuscleGroupPanel shouldersSessionRemoveExercise =
-                new SessionRemoveExercisePanel(this, routine.getMuscleGroups().get(4), session, east, eastLayout);
-        east.add(shouldersSessionRemoveExercise, "Shoulders Remove Exercise");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes the normal shoulder panel
-    private void initNormalShoulderPanel() {
-        MuscleGroupPanel shoulderPanel = new
-                MuscleGroupMenuPanel(this,routine.getMuscleGroups().get(4), east, eastLayout);
+        WorkoutsPanel shoulderPanel = new
+                WorkoutManagerPanel(this,routine.getMuscleGroups().get(4), east, eastLayout);
         east.add(shoulderPanel, "Shoulders");
-        panels.add(shoulderPanel);
+        WorkoutsPanel shouldersAddPanel = new
+                WorkoutsEditPanel(this, routine.getMuscleGroups().get(4), 0);
+        east.add(shouldersAddPanel, "Shoulders Add");
+        WorkoutsPanel shouldersRemovePanel = new
+                HandleExercisePanel(this, routine.getMuscleGroups().get(4), 0);
+        east.add(shouldersRemovePanel, "Shoulders Remove");
+        WorkoutsPanel shouldersEditPanel =
+                new WorkoutsEditPanel(this, routine.getMuscleGroups().get(4), 1);
+        east.add(shouldersEditPanel, "Shoulders Edit");
+        WorkoutsPanel shoulderAddSessionPanel =
+                new SessionAddPanel(this, routine.getMuscleGroups().get(4), session, east, eastLayout);
+        east.add(shoulderAddSessionPanel, "Shoulders Add Session");
+        WorkoutsPanel shouldersSessionAddExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(4), 2);
+        east.add(shouldersSessionAddExercise, "Shoulders Add Exercise");
+        WorkoutsPanel shouldersSessionRemoveExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(4), 1);
+        east.add(shouldersSessionRemoveExercise, "Shoulders Remove Exercise");
     }
 
     // MODIFIES: this
     // EFFECTS: initializes all the panels for biceps
     private void initBicepPanel() {
-        initNormalBicepPanel();
-        MuscleGroupPanel bicepAddPanel = new
-                AddExercisePanel(this, routine.getMuscleGroups().get(3), east, eastLayout);
-        east.add(bicepAddPanel, "Bicep Add");
-        addPanels.add(bicepAddPanel);
-        MuscleGroupPanel bicepRemovePanel = new
-                RemoveExercisePanel(this, routine.getMuscleGroups().get(3), east, eastLayout);
-        east.add(bicepRemovePanel, "Bicep Remove");
-        removePanels.add(bicepRemovePanel);
-        MuscleGroupPanel bicepEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(3), east, eastLayout);
-        east.add(bicepEditPanel, "Bicep Edit");
-        editPanels.add(bicepEditPanel);
-        MuscleGroupPanel bicepAddSessionPanel =
-                new SessionMuscleGroupAddPanel(this, routine.getMuscleGroups().get(3), session, east, eastLayout);
-        east.add(bicepAddSessionPanel, "Bicep Add Session");
-        sessionMuscleGroupAddPanels.add(bicepAddSessionPanel);
-        MuscleGroupPanel bicepSessionAddExercise =
-                new SessionAddExercisePanel(this, routine.getMuscleGroups().get(3), session, east, eastLayout);
-        east.add(bicepSessionAddExercise, "Bicep Add Exercise");
-        MuscleGroupPanel bicepSessionRemoveExercise =
-                new SessionRemoveExercisePanel(this, routine.getMuscleGroups().get(3), session, east, eastLayout);
-        east.add(bicepSessionRemoveExercise, "Bicep Remove Exercise");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes the normal leg panel
-    private void initNormalBicepPanel() {
-        MuscleGroupPanel bicepPanel = new
-                MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(3), east, eastLayout);
+        WorkoutsPanel bicepPanel = new
+                WorkoutManagerPanel(this, routine.getMuscleGroups().get(3), east, eastLayout);
         east.add(bicepPanel, "Biceps");
-        panels.add(bicepPanel);
+        WorkoutsPanel bicepAddPanel = new
+                WorkoutsEditPanel(this, routine.getMuscleGroups().get(3), 0);
+        east.add(bicepAddPanel, "Biceps Add");
+        WorkoutsPanel bicepRemovePanel = new
+                HandleExercisePanel(this, routine.getMuscleGroups().get(3), 0);
+        east.add(bicepRemovePanel, "Biceps Remove");
+        WorkoutsPanel bicepEditPanel =
+                new WorkoutsEditPanel(this, routine.getMuscleGroups().get(3), 1);
+        east.add(bicepEditPanel, "Biceps Edit");
+        WorkoutsPanel bicepAddSessionPanel =
+                new SessionAddPanel(this, routine.getMuscleGroups().get(3), session, east, eastLayout);
+        east.add(bicepAddSessionPanel, "Biceps Add Session");
+        WorkoutsPanel bicepSessionAddExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(3), 2);
+        east.add(bicepSessionAddExercise, "Biceps Add Exercise");
+        WorkoutsPanel bicepSessionRemoveExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(3), 1);
+        east.add(bicepSessionRemoveExercise, "Biceps Remove Exercise");
     }
 
     // MODIFIES: this
     // EFFECTS: initializes all the panels for triceps
     private void initTricepPanel() {
-        initTricepNormalPanel();
-        MuscleGroupPanel tricepAddPanel = new
-                AddExercisePanel(this, routine.getMuscleGroups().get(2), east, eastLayout);
-        east.add(tricepAddPanel, "Triceps Add");
-        addPanels.add(tricepAddPanel);
-        MuscleGroupPanel tricepRemovePanel = new
-                RemoveExercisePanel(this, routine.getMuscleGroups().get(2), east, eastLayout);
-        east.add(tricepRemovePanel, "Triceps Remove");
-        removePanels.add(tricepRemovePanel);
-        MuscleGroupPanel tricepsEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(2), east, eastLayout);
-        east.add(tricepsEditPanel, "Triceps Edit");
-        editPanels.add(tricepsEditPanel);
-        MuscleGroupPanel tricepAddSessionPanel =
-                new SessionMuscleGroupAddPanel(this, routine.getMuscleGroups().get(2), session, east, eastLayout);
-        east.add(tricepAddSessionPanel, "Triceps Add Session");
-        sessionMuscleGroupAddPanels.add(tricepAddSessionPanel);
-        MuscleGroupPanel tricepSessionAddExercise =
-                new SessionAddExercisePanel(this, routine.getMuscleGroups().get(2), session, east, eastLayout);
-        east.add(tricepSessionAddExercise, "Triceps Add Exercise");
-        MuscleGroupPanel tricepsSessionRemoveExercise =
-                new SessionRemoveExercisePanel(this, routine.getMuscleGroups().get(2), session, east, eastLayout);
-        east.add(tricepsSessionRemoveExercise, "Triceps Remove Exercise");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes the normal tricep panel
-    private void initTricepNormalPanel() {
-        MuscleGroupPanel tricepPanel = new
-                MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(2), east, eastLayout);
+        WorkoutsPanel tricepPanel = new
+                WorkoutManagerPanel(this, routine.getMuscleGroups().get(2), east, eastLayout);
         east.add(tricepPanel, "Triceps");
-        panels.add(tricepPanel);
+        WorkoutsPanel tricepAddPanel = new
+                WorkoutsEditPanel(this, routine.getMuscleGroups().get(2), 0);
+        east.add(tricepAddPanel, "Triceps Add");
+        WorkoutsPanel tricepRemovePanel = new
+                HandleExercisePanel(this, routine.getMuscleGroups().get(2), 0);
+        east.add(tricepRemovePanel, "Triceps Remove");
+        WorkoutsPanel tricepsEditPanel =
+                new WorkoutsEditPanel(this, routine.getMuscleGroups().get(2), 1);
+        east.add(tricepsEditPanel, "Triceps Edit");
+        WorkoutsPanel tricepAddSessionPanel =
+                new SessionAddPanel(this, routine.getMuscleGroups().get(2), session, east, eastLayout);
+        east.add(tricepAddSessionPanel, "Triceps Add Session");
+        WorkoutsPanel tricepSessionAddExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(2), 2);
+        east.add(tricepSessionAddExercise, "Triceps Add Exercise");
+        WorkoutsPanel tricepsSessionRemoveExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(2), 1);
+        east.add(tricepsSessionRemoveExercise, "Triceps Remove Exercise");
     }
 
     // MODIFIES: this
     // EFFECTS: initializes all the panels for chest
     private void initChestPanel() {
-        initChestNormalPanel();
-        MuscleGroupPanel chestAddPanel = new
-                AddExercisePanel(this, routine.getMuscleGroups().get(0), east, eastLayout);
+        WorkoutsPanel chestPanel = new
+                WorkoutManagerPanel(this, routine.getMuscleGroups().get(0), east, eastLayout);
+        east.add(chestPanel, "Chest");
+        WorkoutsPanel chestAddPanel = new
+                WorkoutsEditPanel(this, routine.getMuscleGroups().get(0), 0);
         east.add(chestAddPanel, "Chest Add");
-        addPanels.add(chestAddPanel);
-        MuscleGroupPanel chestRemovePanel = new
-                RemoveExercisePanel(this, routine.getMuscleGroups().get(0), east, eastLayout);
+        WorkoutsPanel chestRemovePanel = new
+                HandleExercisePanel(this, routine.getMuscleGroups().get(0), 0);
         east.add(chestRemovePanel, "Chest Remove");
-        removePanels.add(chestRemovePanel);
-        MuscleGroupPanel chestEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(0), east, eastLayout);
+        WorkoutsPanel chestEditPanel =
+                new WorkoutsEditPanel(this, routine.getMuscleGroups().get(0), 1);
         east.add(chestEditPanel, "Chest Edit");
-        editPanels.add(chestEditPanel);
-        MuscleGroupPanel chestAddSessionPanel =
-                new SessionMuscleGroupAddPanel(this, routine.getMuscleGroups().get(0), session, east, eastLayout);
+        WorkoutsPanel chestAddSessionPanel =
+                new SessionAddPanel(this, routine.getMuscleGroups().get(0), session, east, eastLayout);
         east.add(chestAddSessionPanel, "Chest Add Session");
-        sessionMuscleGroupAddPanels.add(chestAddSessionPanel);
-        MuscleGroupPanel chestSessionAddExercise =
-                new SessionAddExercisePanel(this, routine.getMuscleGroups().get(0), session, east, eastLayout);
+        WorkoutsPanel chestSessionAddExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(0), 2);
         east.add(chestSessionAddExercise, "Chest Add Exercise");
-        MuscleGroupPanel chestSessionRemoveExercise =
-                new SessionRemoveExercisePanel(this, routine.getMuscleGroups().get(0), session, east, eastLayout);
+        WorkoutsPanel chestSessionRemoveExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(0), 1);
         east.add(chestSessionRemoveExercise, "Chest Remove Exercise");
 
     }
 
-    // MODIFIES: this
-    // EFFECTS: initializes the normal chest panel
-    private void initChestNormalPanel() {
-        MuscleGroupPanel chestPanel = new
-                MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(0), east, eastLayout);
-        east.add(chestPanel, "Chest");
-        panels.add(chestPanel);
-    }
 
     // MODIFIES: this
     // EFFECTS: initializes all the panels for back
     private void initBackPanel() {
-        initNormalBackPanel();
-        MuscleGroupPanel backAddPanel = new
-                AddExercisePanel(this, routine.getMuscleGroups().get(1), east, eastLayout);
+        WorkoutsPanel backPanel = new
+                WorkoutManagerPanel(this, routine.getMuscleGroups().get(1), east, eastLayout);
+        east.add(backPanel, "Back");
+        WorkoutsPanel backAddPanel = new
+                WorkoutsEditPanel(this, routine.getMuscleGroups().get(1), 0);
         east.add(backAddPanel, "Back Add");
-        addPanels.add(backAddPanel);
-        MuscleGroupPanel backRemovePanel = new
-                RemoveExercisePanel(this, routine.getMuscleGroups().get(1), east, eastLayout);
+        WorkoutsPanel backRemovePanel = new
+                HandleExercisePanel(this, routine.getMuscleGroups().get(1), 0);
         east.add(backRemovePanel, "Back Remove");
-        removePanels.add(backRemovePanel);
-        MuscleGroupPanel backEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(1), east, eastLayout);
+        WorkoutsPanel backEditPanel =
+                new WorkoutsEditPanel(this, routine.getMuscleGroups().get(1), 1);
         east.add(backEditPanel, "Back Edit");
-        editPanels.add(backEditPanel);
-        MuscleGroupPanel backAddSessionPanel =
-                new SessionMuscleGroupAddPanel(this, routine.getMuscleGroups().get(1), session, east, eastLayout);
+        WorkoutsPanel backAddSessionPanel =
+                new SessionAddPanel(this, routine.getMuscleGroups().get(1), session, east, eastLayout);
         east.add(backAddSessionPanel, "Back Add Session");
-        sessionMuscleGroupAddPanels.add(backAddPanel);
-        MuscleGroupPanel backSessionAddExercise =
-                new SessionAddExercisePanel(this, routine.getMuscleGroups().get(1), session, east, eastLayout);
+        WorkoutsPanel backSessionAddExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(1), 2);
         east.add(backSessionAddExercise, "Back Add Exercise");
-        MuscleGroupPanel backSessionRemoveExercise =
-                new SessionRemoveExercisePanel(this, routine.getMuscleGroups().get(1), session, east, eastLayout);
+        WorkoutsPanel backSessionRemoveExercise =
+                new HandleExercisePanel(this, routine.getMuscleGroups().get(1), 1);
         east.add(backSessionRemoveExercise, "Back Remove Exercise");
     }
 
-    // MODIFIES: this
-    // EFFECTS: initializes the normal back panel
-    private void initNormalBackPanel() {
-        MuscleGroupPanel backPanel = new
-                MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(1), east, eastLayout);
-        east.add(backPanel, "Back");
-        panels.add(backPanel);
+    //EFFECTS: finds the correct muscle menu panel to display based on the state of muscle menu panel
+    public void findMuscleMenuPanel(int state, String muscleGroupName) {
+        switch (state) {
+            case 0:
+                eastLayout.show(east, muscleGroupName);
+                break;
+            case 1:
+                eastLayout.show(east, muscleGroupName + " Add Session");
+                break;
+            case 2:
+                eastLayout.show(east, muscleGroupName + " Remove Exercise");
+        }
     }
 
     //EFFECTS: finds the session add panel for muscle group and displays it
@@ -338,8 +286,8 @@ public class EastPanelManager {
             case "Tricep":
                 eastLayout.show(east, "Triceps Add Exercise");
                 break;
-            case "Bicep":
-                eastLayout.show(east, "Bicep Add Exercise");
+            case "Biceps":
+                eastLayout.show(east, "Biceps Add Exercise");
                 break;
             case "Abs":
                 eastLayout.show(east, "Abs Add Exercise");
@@ -350,6 +298,7 @@ public class EastPanelManager {
         }
 
     }
+
 
     // EFFECTS: Based of the given workout, it finds the correct add panel to display
     public void findAddPanel(Workout w) {
@@ -366,8 +315,8 @@ public class EastPanelManager {
             case "Tricep":
                 eastLayout.show(east, "Triceps Add");
                 break;
-            case "Bicep":
-                eastLayout.show(east, "Bicep Add");
+            case "Biceps":
+                eastLayout.show(east, "Biceps Add");
                 break;
             case "Abs":
                 eastLayout.show(east, "Abs Add");
@@ -393,8 +342,8 @@ public class EastPanelManager {
             case "Tricep":
                 eastLayout.show(east, "Triceps Edit");
                 break;
-            case "Bicep":
-                eastLayout.show(east, "Bicep Edit");
+            case "Biceps":
+                eastLayout.show(east, "Biceps Edit");
                 break;
             case "Abs":
                 eastLayout.show(east, "Abs Edit");
@@ -420,8 +369,8 @@ public class EastPanelManager {
             case "Tricep":
                 eastLayout.show(east, "Triceps Remove");
                 break;
-            case "Bicep":
-                eastLayout.show(east, "Bicep Remove");
+            case "Biceps":
+                eastLayout.show(east, "Biceps Remove");
                 break;
             case "Abs":
                 eastLayout.show(east, "Abs Remove");
@@ -432,254 +381,60 @@ public class EastPanelManager {
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: finds the correct panel for given workout and removes it from panels and returns the panel if found
-    public MuscleGroupPanel getPanelForWorkout(Workout w) {
-        for (MuscleGroupPanel panel: panels) {
-            if (panel.getWorkout().equals(w)) {
-                panels.remove(panel);
-                return panel;
-            }
+    //EFFECTS: carries out the appropriate task for remove panel
+    public void removePanelOperation(int state, Exercise exercise, Workout workout) {
+        switch (state) {
+            case 0:
+                if (workout.getExercises().contains(exercise)) {
+                    workout.removeExercise(exercise);
+                }
+                repaintPanels();
+                updatePanels(workout);
+                break;
+            case 1:
+                session.removeExerciseFromSession(exercise);
+                updateViewSessionPanel();
+                eastLayout.show(east, "Muscle Menu");
+                break;
+            case 2:
+                session.addExerciseToSession(exercise);
+                updateViewSessionPanel();
+                eastLayout.show(east, "Muscle Menu");
         }
-        return null;
     }
 
-    // MODIFIES: this
-    // EFFECTS: finds the correct remove panel for given workout and removes it from removePanels and returns
-    // the panel if found
-    public MuscleGroupPanel getRemovePanel(Workout w) {
-        for (MuscleGroupPanel panel: removePanels) {
-            if (panel.getWorkout().equals(w)) {
-                removePanels.remove(panel);
-                return panel;
-            }
-        }
-        return null;
-    }
 
-    // MODIFIES: this
-    // EFFECTS: finds the correct add panel for given workout and removes it from addPanels and
-    // returns the panel if found
-    public MuscleGroupPanel getAddPanel(Workout w) {
-        for (MuscleGroupPanel panel: addPanels) {
-            if (panel.getWorkout().equals(w)) {
-                addPanels.remove(panel);
-                return panel;
-            }
-        }
-        return null;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: finds the correct edit panel for given workout and removes it from editPanels
-    // and returns the panel if found
-    public MuscleGroupPanel getEditPanel(Workout w) {
-        for (MuscleGroupPanel panel: editPanels) {
-            if (panel.getWorkout().equals(w)) {
-                editPanels.remove(panel);
-                return panel;
-            }
-        }
-        return null;
-    }
 
     // EFFECTS: Updates all panels for given workout
     public void updatePanels(Workout w) {
         switch (w.getName()) {
             case "Chest":
-                updateChest();
+                eastLayout.show(east, "Chest");
                 break;
             case "Back":
-                updateBack();
+                eastLayout.show(east, "Back");
                 break;
             case "Legs":
-                updateLegs();
+                eastLayout.show(east, "Legs");
                 break;
             case "Tricep":
-                updateTricep();
+                eastLayout.show(east, "Triceps");
                 break;
-            case "Bicep":
-                updateBicep();
+            case "Biceps":
+                eastLayout.show(east, "Biceps");
                 break;
             case "Abs":
-                updateAbs();
+                eastLayout.show(east, "Abs");
                 break;
             case "Shoulder":
-                updateShoulder();
+                eastLayout.show(east, "Shoulders");
                 break;
         }
     }
 
-    // MODIFIES: this
-    // EFFECTS: updates all shoulder panels and displays main panel
-    private void updateShoulder() {
-        MuscleGroupPanel shoulderPanel =
-                new MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(4), east, eastLayout);
-        east.add(shoulderPanel, "Shoulders");
-        panels.add(shoulderPanel);
-        MuscleGroupPanel shoulderRemovePanel =
-                new RemoveExercisePanel(this, routine.getMuscleGroups().get(4), east, eastLayout);
-        removePanels.add(shoulderRemovePanel);
-        east.add(shoulderRemovePanel, "Shoulders Remove");
-        MuscleGroupPanel shoulderAddPanel =
-                new AddExercisePanel(this, routine.getMuscleGroups().get(4), east, eastLayout);
-        addPanels.add(shoulderAddPanel);
-        east.add(shoulderAddPanel, "Shoulders Add");
-        MuscleGroupPanel shoulderEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(4), east, eastLayout);
-        editPanels.add(shoulderEditPanel);
-        east.add(shoulderEditPanel, "Shoulders Edit");
-        east.revalidate();
-        east.repaint();
-        eastLayout.show(east, "Shoulders");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates all abs panels and displays main panel
-    private void updateAbs() {
-        MuscleGroupPanel absPanel =
-                new MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(6), east, eastLayout);
-        east.add(absPanel, "Abs");
-        panels.add(absPanel);
-        MuscleGroupPanel absRemovePanel =
-                new RemoveExercisePanel(this, routine.getMuscleGroups().get(6), east, eastLayout);
-        removePanels.add(absRemovePanel);
-        east.add(absRemovePanel, "Abs Remove");
-        MuscleGroupPanel absAddPanel =
-                new AddExercisePanel(this, routine.getMuscleGroups().get(6), east, eastLayout);
-        addPanels.add(absAddPanel);
-        east.add(absAddPanel, "Abs Add");
-        MuscleGroupPanel absEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(6), east, eastLayout);
-        editPanels.add(absEditPanel);
-        east.add(absEditPanel, "Abs Edit");
-        east.revalidate();
-        east.repaint();
-        eastLayout.show(east, "Abs");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates all bicep panels and displays main panel
-    private void updateBicep() {
-        MuscleGroupPanel bicepPanel =
-                new MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(3), east, eastLayout);
-        east.add(bicepPanel, "Bicep");
-        panels.add(bicepPanel);
-        MuscleGroupPanel bicepRemovePanel =
-                new RemoveExercisePanel(this, routine.getMuscleGroups().get(3), east, eastLayout);
-        removePanels.add(bicepRemovePanel);
-        east.add(bicepRemovePanel, "Bicep Remove");
-        MuscleGroupPanel bicepAddPanel =
-                new AddExercisePanel(this, routine.getMuscleGroups().get(3), east, eastLayout);
-        addPanels.add(bicepAddPanel);
-        east.add(bicepAddPanel, "Bicep Add");
-        MuscleGroupPanel bicepEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(3), east, eastLayout);
-        editPanels.add(bicepEditPanel);
-        east.add(bicepEditPanel, "Bicep Edit");
-        east.revalidate();
-        east.repaint();
-        eastLayout.show(east, "Bicep");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates all tricep panels and displays main panel
-    private void updateTricep() {
-        MuscleGroupPanel chestPanel =
-                new MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(2), east, eastLayout);
-        east.add(chestPanel, "Triceps");
-        panels.add(chestPanel);
-        MuscleGroupPanel tricepRemovePanel =
-                new RemoveExercisePanel(this, routine.getMuscleGroups().get(2), east, eastLayout);
-        removePanels.add(tricepRemovePanel);
-        east.add(tricepRemovePanel, "Triceps Remove");
-        MuscleGroupPanel tricepAddPanel =
-                new AddExercisePanel(this, routine.getMuscleGroups().get(2), east, eastLayout);
-        addPanels.add(tricepAddPanel);
-        east.add(tricepAddPanel, "Triceps Add");
-        MuscleGroupPanel tricepsEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(2), east, eastLayout);
-        editPanels.add(tricepsEditPanel);
-        east.add(tricepsEditPanel, "Triceps Edit");
-        east.revalidate();
-        east.repaint();
-        eastLayout.show(east, "Triceps");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates all legs panels and displays main panel
-    private void updateLegs() {
-        MuscleGroupPanel legPanel =
-                new MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(5), east, eastLayout);
-        east.add(legPanel, "Legs");
-        panels.add(legPanel);
-        MuscleGroupPanel legsRemovePanel =
-                new RemoveExercisePanel(this, routine.getMuscleGroups().get(5), east, eastLayout);
-        removePanels.add(legsRemovePanel);
-        east.add(legsRemovePanel, "Legs Remove");
-        MuscleGroupPanel legsAddPanel =
-                new AddExercisePanel(this, routine.getMuscleGroups().get(5), east, eastLayout);
-        addPanels.add(legsAddPanel);
-        east.add(legsAddPanel, "Legs Add");
-        MuscleGroupPanel legsEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(5), east, eastLayout);
-        editPanels.add(legsEditPanel);
-        east.add(legsEditPanel, "Legs Edit");
-        east.revalidate();
-        east.repaint();
-        eastLayout.show(east, "Legs");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates all back panels and displays main panel
-    private void updateBack() {
-        MuscleGroupPanel backPanel =
-                new MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(1), east, eastLayout);
-        east.add(backPanel, "Back");
-        panels.add(backPanel);
-        MuscleGroupPanel backRemovePanel =
-                new RemoveExercisePanel(this, routine.getMuscleGroups().get(1), east, eastLayout);
-        removePanels.add(backRemovePanel);
-        east.add(backRemovePanel, "Back Remove");
-        MuscleGroupPanel backAddPanel =
-                new AddExercisePanel(this, routine.getMuscleGroups().get(1), east, eastLayout);
-        addPanels.add(backAddPanel);
-        east.add(backAddPanel, "Back Add");
-        MuscleGroupPanel backEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(1), east, eastLayout);
-        editPanels.add(backEditPanel);
-        east.add(backEditPanel, "Back Edit");
-        east.revalidate();
-        east.repaint();
-        eastLayout.show(east, "Back");
-    }
-
-    // MODIFIES: this
-    // EFFECTS: updates all chest panels and displays main panel
-    private void updateChest() {
-        MuscleGroupPanel chestPanel =
-                new MuscleGroupMenuPanel(this, routine.getMuscleGroups().get(0), east, eastLayout);
-        east.add(chestPanel, "Chest");
-        panels.add(chestPanel);
-        MuscleGroupPanel chestRemovePanel =
-                new RemoveExercisePanel(this, routine.getMuscleGroups().get(0), east, eastLayout);
-        removePanels.add(chestRemovePanel);
-        east.add(chestRemovePanel, "Chest Remove");
-        MuscleGroupPanel chestAddPanel =
-                new AddExercisePanel(this, routine.getMuscleGroups().get(0), east, eastLayout);
-        addPanels.add(chestAddPanel);
-        east.add(chestAddPanel, "Chest Add");
-        MuscleGroupPanel chestEditPanel =
-                new EditExercisePannel(this, routine.getMuscleGroups().get(0), east, eastLayout);
-        editPanels.add(chestEditPanel);
-        east.add(chestEditPanel, "Chest Edit");
-        east.revalidate();
-        east.repaint();
-        eastLayout.show(east, "Chest");
-    }
 
     // EFFECTS: updates the live session panel
     public void updateLiveSessionPanel() {
-        liveSessionPanel = new LiveSessionPanel(session, eastLayout, east, this);
+        new LiveSessionPanel(session, eastLayout, east, this);
     }
 }

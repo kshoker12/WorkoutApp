@@ -6,26 +6,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 // Represents the menu of all muscle groups listed out
-public class MuscleGroupMenu extends JPanel {
-    private JButton chestButton;
-    private JButton backButton;
-    private JButton tricepButton;
-    private JButton bicepButton;
-    private JButton shoulderButton;
-    private JButton legsButton;
-    private JButton absButton;
-    private JButton goBackButton;
-    private WorkoutPlannerAppGUI mainFrame;
+public class WorkoutsMenu extends JPanel {
+    private EastPanelManager panelManager;
     private JPanel east;
     private CardLayout eastLayout;
+    private int state;
 
     // EFFECTS: creates the panel for muscle group menu and all the necessary buttons
-    public MuscleGroupMenu(WorkoutPlannerAppGUI mainFrame, JPanel east, CardLayout eastLayout) {
+    public WorkoutsMenu(EastPanelManager panelManager, JPanel east, CardLayout eastLayout, int state) {
         super(new GridLayout(7, 1, 10, 10));
+        this.state = state;
         this.east = east;
         this.eastLayout = eastLayout;
         this.east.add(this, "Muscle Menu");
-        this.mainFrame = mainFrame;
+        this.panelManager = panelManager;
         setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         setBackground(Color.LIGHT_GRAY);
         setPreferredSize(new Dimension(300, 400));
@@ -39,9 +33,13 @@ public class MuscleGroupMenu extends JPanel {
         createGoBackButton();
     }
 
+    public void setState(int state) {
+        this.state = state;
+    }
+
     // EFFECTS: creates the chest button and behaviour
     private void createChestButton() {
-        chestButton = new JButton("Chest");
+        JButton chestButton = new JButton("Chest");
         chestButton.setPreferredSize(new Dimension(280,30));
         chestButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(chestButton);
@@ -49,14 +47,14 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Chest");
+                panelManager.findMuscleMenuPanel(state, "Chest");
             }
         });
     }
 
     // EFFECTS: creates the back button and behaviour
     private void createBackButton() {
-        backButton = new JButton("Back");
+        JButton backButton = new JButton("Back");
         backButton.setPreferredSize(new Dimension(280,30));
         backButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(backButton);
@@ -64,14 +62,14 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Back");
+                panelManager.findMuscleMenuPanel(state, "Back");
             }
         });
     }
 
     // EFFECTS: creates the tricep button and behaviour
     private void createTricepButton() {
-        tricepButton = new JButton("Triceps");
+        JButton tricepButton = new JButton("Triceps");
         tricepButton.setPreferredSize(new Dimension(280,30));
         tricepButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(tricepButton);
@@ -79,14 +77,14 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Triceps");
+                panelManager.findMuscleMenuPanel(state, "Triceps");
             }
         });
     }
 
     // EFFECTS: creates the bicep button and behaviour
     private void createBicepButton() {
-        bicepButton = new JButton("Biceps");
+        JButton bicepButton = new JButton("Biceps");
         bicepButton.setPreferredSize(new Dimension(280,30));
         bicepButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(bicepButton);
@@ -94,14 +92,14 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Biceps");
+                panelManager.findMuscleMenuPanel(state, "Biceps");
             }
         });
     }
 
     // EFFECTS: creates the shoulder button and behaviour
     private void createShoulderButton() {
-        shoulderButton = new JButton("Shoulders");
+        JButton shoulderButton = new JButton("Shoulders");
         shoulderButton.setPreferredSize(new Dimension(280,30));
         shoulderButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(shoulderButton);
@@ -109,14 +107,14 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Shoulders");
+                panelManager.findMuscleMenuPanel(state, "Shoulders");
             }
         });
     }
 
     // EFFECTS: creates the legs button and behaviour
     private void createLegsButton() {
-        legsButton = new JButton("Legs");
+        JButton legsButton = new JButton("Legs");
         legsButton.setPreferredSize(new Dimension(280,30));
         legsButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(legsButton);
@@ -124,14 +122,14 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Legs");
+                panelManager.findMuscleMenuPanel(state, "Legs");
             }
         });
     }
 
     // EFFECTS: creates the abs button and behaviour
     private void createAbsButton() {
-        absButton = new JButton("Abs");
+        JButton absButton = new JButton("Abs");
         absButton.setPreferredSize(new Dimension(280,30));
         absButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(absButton);
@@ -139,14 +137,14 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Abs");
+                panelManager.findMuscleMenuPanel(state, "Abs");
             }
         });
     }
 
     // EFFECTS: creates the go back button and behaviour
     private void createGoBackButton() {
-        goBackButton = new JButton("Go Back");
+        JButton goBackButton = new JButton("Go Back");
         goBackButton.setPreferredSize(new Dimension(280,30));
         goBackButton.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(goBackButton);
@@ -154,7 +152,11 @@ public class MuscleGroupMenu extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(false);
-                eastLayout.show(east, "Go Back");
+                if (state == 0) {
+                    eastLayout.show(east, "Go Back");
+                } else {
+                    eastLayout.show(east, "Session Menu");
+                }
             }
         });
     }

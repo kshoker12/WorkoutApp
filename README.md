@@ -48,4 +48,96 @@ along with the sets and reps.
 - As a user, I want to be able to save my created muscle groups
 - As a user, I want to be able to load my created muscle groups
 - As a user, I want to be able to have a quit option for my menu
-- 
+
+**Phase 4: Task 2**
+
+Fri Apr 01 00:47:51 PDT 2022
+Added Chest Press to Chest
+
+
+Fri Apr 01 00:48:05 PDT 2022
+Changed Chest Press's sets to 4 and reps to 3
+
+
+Fri Apr 01 00:48:14 PDT 2022
+Removed Chest Press from Chest
+
+
+Fri Apr 01 00:48:19 PDT 2022
+Loaded Karn's Workout from ./data/workouts.json
+
+
+Fri Apr 01 00:48:27 PDT 2022
+Added Wide-grip Pull-ups to session
+
+
+Fri Apr 01 00:48:27 PDT 2022
+Added Barbell Rows to session
+
+
+Fri Apr 01 00:48:27 PDT 2022
+Added Angel & Devil to session
+
+
+Fri Apr 01 00:48:27 PDT 2022
+Added Deadlifts to session
+
+
+Fri Apr 01 00:48:36 PDT 2022
+Removed Deadlifts from session
+
+
+Fri Apr 01 00:48:42 PDT 2022
+Added Dips to session
+
+
+Fri Apr 01 00:48:42 PDT 2022
+Added Close-grip Push-ups to session
+
+
+Fri Apr 01 00:48:42 PDT 2022
+Added Tricep Press to session
+
+
+Fri Apr 01 00:48:58 PDT 2022
+Added Side Raise to session
+
+
+Fri Apr 01 00:49:11 PDT 2022
+Removed Leg Press from Legs
+
+
+Fri Apr 01 00:49:20 PDT 2022
+Added Leg Raise to Legs
+
+
+Fri Apr 01 00:49:28 PDT 2022
+Changed Leg Raise's sets to 3 and reps to 10
+
+
+Fri Apr 01 00:49:32 PDT 2022
+Finished Exercise Wide-grip Pull-ups
+
+
+Fri Apr 01 00:49:33 PDT 2022
+Finished Exercise Barbell Rows
+
+
+Fri Apr 01 00:49:33 PDT 2022
+Finished Exercise Angel & Devil
+
+
+Fri Apr 01 00:49:33 PDT 2022
+Finished Exercise Dips
+
+
+Fri Apr 01 00:49:34 PDT 2022
+Finished Exercise Close-grip Push-ups
+
+
+Fri Apr 01 00:49:34 PDT 2022
+Finished Exercise Tricep Press
+
+
+Fri Apr 01 00:49:34 PDT 2022
+Finished Exercise Side Raise

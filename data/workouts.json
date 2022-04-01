@@ -20,9 +20,9 @@
                     "name": "Incline Bench Press"
                 },
                 {
-                    "reps": 4,
-                    "sets": 5,
-                    "name": "CHest fdhfgdhf"
+                    "reps": 10,
+                    "sets": 4,
+                    "name": "Chest Fly"
                 }
             ]
         },
@@ -72,7 +72,7 @@
             ]
         },
         {
-            "name": "Bicep",
+            "name": "Biceps",
             "Exercises": [
                 {
                     "reps": 12,

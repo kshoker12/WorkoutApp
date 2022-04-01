@@ -8,64 +8,51 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-// represents the edit exercise panel where exercises can be edited
-public class EditExercisePannel extends MuscleGroupPanel {
-    private JPanel east;
-    private CardLayout eastLayout;
+// Represents the edit muscle group panel for muscle groups
+public class WorkoutsEditPanel extends WorkoutsPanel {
     private EastPanelManager managerPanel;
     private JTextField exerciseName;
     private JTextField exerciseSets;
     private JTextField exerciseReps;
-    private JButton confirm;
+    private int state;
 
-    // EFFECTS: creates the panel and sets up the text fields and confirm button
-    public EditExercisePannel(EastPanelManager managerPanel, Workout w, JPanel east, CardLayout eastLayout) {
+    // EFFECTS: constructs the panel as well as the text fields and confirm button
+    public WorkoutsEditPanel(EastPanelManager managerPanel, Workout w, int state) {
         super(w);
-        this.east = east;
-        this.eastLayout = eastLayout;
         this.managerPanel = managerPanel;
+        this.state = state;
         initTextFields();
         initConfirm();
     }
 
     // MODIFIES: this
-    // EFFECTS: creates the confirm button and its behaviour
+    // EFFECTS: initializes the confirm button as well as its behaviour
     private void initConfirm() {
-        confirm = new JButton("Confirm");
+        JButton confirm = new JButton("Confirm");
         confirm.setPreferredSize(new Dimension(280, 30));
         this.add(confirm);
         confirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Exercise exercise = getWorkout().findExercise(exerciseName.getText());
-                if (exercise != null) {
-                    exercise.editExercise(Integer.parseInt(exerciseSets.getText()),
+                if (state == 0) {
+                    Exercise exercise = new Exercise(exerciseName.getText(), Integer.parseInt(exerciseSets.getText()),
                             Integer.parseInt(exerciseReps.getText()));
+                    getWorkout().addExercise(exercise);
+                } else {
+                    Exercise exercise = getWorkout().findExercise(exerciseName.getText());
+                    if (exercise != null) {
+                        exercise.editExercise(Integer.parseInt(exerciseSets.getText()),
+                                Integer.parseInt(exerciseReps.getText()));
+                    }
                 }
-
-                MuscleGroupPanel w = managerPanel.getPanelForWorkout(getWorkout());
-                MuscleGroupPanel r = managerPanel.getRemovePanel(getWorkout());
-                MuscleGroupPanel a = managerPanel.getAddPanel(getWorkout());
-                MuscleGroupPanel ed = managerPanel.getEditPanel(getWorkout());
-                east.remove(a);
-                east.remove(r);
-                east.remove(w);
-                east.remove(ed);
-                managerPanel.updatePanels(getWorkout());
                 clearTextFields();
+                managerPanel.repaintPanels();
+                managerPanel.updatePanels(getWorkout());
             }
         });
     }
 
-    // MODIFIES: this
-    // EFFECTS: clears all the text fields
-    private void clearTextFields() {
-        exerciseName.setText("");
-        exerciseReps.setText("");
-        exerciseSets.setText("");
-    }
-
-    // EFFECTS: creates the text fields and instruction labels
+    // EFFECTS: initializes the text fields and instruction labels
     private void initTextFields() {
         this.add(new JLabel("Enter Exercise Name"));
         exerciseName = new JTextField(20);
@@ -83,4 +70,13 @@ public class EditExercisePannel extends MuscleGroupPanel {
         exerciseReps.setFont(new Font("Arial", Font.ITALIC, 16));
         this.add(exerciseReps);
     }
+
+    // MODIFIES: this
+    // EFFECTS: clears the text field
+    private void clearTextFields() {
+        exerciseName.setText("");
+        exerciseReps.setText("");
+        exerciseSets.setText("");
+    }
+
 }

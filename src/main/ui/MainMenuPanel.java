@@ -1,8 +1,5 @@
 package ui;
 
-import model.Event;
-import model.EventLog;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,12 +9,16 @@ import java.awt.event.ActionListener;
 public class MainMenuPanel extends JPanel {
     private final JPanel east;
     private final CardLayout eastLayout;
+    private WorkoutsMenu menu;
+    private WorkoutPlannerAppGUI mainFrame;
 
     // EFFECTS: Constructs the Panel and all the necessary buttons
-    public MainMenuPanel(JPanel east, CardLayout eastLayout) {
+    public MainMenuPanel(WorkoutPlannerAppGUI mainFrame, WorkoutsMenu menu, JPanel east, CardLayout eastLayout) {
         super(new GridLayout(5, 1, 10, 10));
         this.east = east;
         this.eastLayout = eastLayout;
+        this.menu = menu;
+        this.mainFrame = mainFrame;
         setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
         setBackground(Color.black);
         setPreferredSize(new Dimension(300, 500));
@@ -37,6 +38,7 @@ public class MainMenuPanel extends JPanel {
         muscleGroupButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                menu.setState(0);
                 eastLayout.show(east, "Muscle Menu");
             }
         });
@@ -93,10 +95,7 @@ public class MainMenuPanel extends JPanel {
         quitSession.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                for (Event next: EventLog.getInstance()) {
-                    System.out.println(next.toString() + "\n\n");
-                }
-                System.exit(0);
+                mainFrame.dispose();
             }
         });
     }

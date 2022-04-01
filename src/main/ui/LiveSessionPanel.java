@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
 
 // Represents the panel which is displayed when session is live
 public class LiveSessionPanel extends JPanel {
-    private JButton nextExercise;
-    private JLabel currentExercise;
     private Session session;
     private CardLayout eastLayout;
     private EastPanelManager panelManager;
@@ -41,7 +39,7 @@ public class LiveSessionPanel extends JPanel {
     // EFFECTS: if session.getSessionSize > 0, then update it to the next exercise and if not then display the end
     // session panel
     private void initNextExercise() {
-        nextExercise = new JButton("Next Exercise");
+        JButton nextExercise = new JButton("Next Exercise");
         nextExercise.setPreferredSize(new Dimension(280,30));
         nextExercise.setFont(new Font("Arial",Font.BOLD, 20));
         this.add(nextExercise);
@@ -63,7 +61,8 @@ public class LiveSessionPanel extends JPanel {
         if (session.getSessionTracker().size() > 0) {
             Exercise e = session.getExerciseAtIndex(0);
             session.nextExercise();
-            currentExercise = new JLabel(e.getName() + " : " + e.getSets() + " Sets : " + e.getReps() + " Reps");
+            JLabel currentExercise =
+                    new JLabel(e.getName() + " : " + e.getSets() + " Sets : " + e.getReps() + " Reps");
             add(currentExercise);
             currentExercise.setFont(new Font("Arial", Font.ITALIC, 16));
             currentExercise.setPreferredSize(new Dimension(280, 30));
