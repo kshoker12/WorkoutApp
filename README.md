@@ -141,3 +141,17 @@ Finished Exercise Tricep Press
 
 Fri Apr 01 00:49:34 PDT 2022
 Finished Exercise Side Raise
+
+
+**Phase 4: Task 3**
+- My design has around 48 different panels and I have a class called EastPanelManager which decides which panel
+will be displayed in the East panel and I wish I could find a way to reduce the amount of panels I have by perhaps 
+using fewer panels and having a field for a state which decides how the panel appears based on the state, rather than
+having a panel for each task I want to carry out because this would simplify the design significantly. 
+- In my design I have to update panels whenever I add an exercise to a workout or to a session and when I do this, 
+I update the panel by deleting it and reinitializing it. I wasn't sure how to update the panel without deleting it but 
+couldn't find a way to do that so if I could figure out how to update the current panel, I would incorporate that into 
+my design.
+- I think there would be more ways to improve my program but based on the knowledge I've gained over this course,
+I have simplified my code as much as possible and have a decent design because most of the UI is dependent on one 
+particular class which manages the panel so if anything goes wrong with UI, I can easily identify source of error.
