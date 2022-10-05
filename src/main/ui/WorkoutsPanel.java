@@ -14,10 +14,10 @@ public abstract class WorkoutsPanel extends JPanel {
     // EFFECTS: Constructs the default panel and sets up exercise labels
     public WorkoutsPanel(Workout w) {
         super(new GridLayout(w.getExercises().size(), 1, 10, 10));
-        workout = w;
         setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 5));
         setPreferredSize(new Dimension(300, 400));
         setBackground(Color.white);
+        workout = w;
         initLabels();
 
     }

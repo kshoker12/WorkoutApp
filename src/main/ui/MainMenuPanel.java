@@ -15,13 +15,13 @@ public class MainMenuPanel extends JPanel {
     // EFFECTS: Constructs the Panel and all the necessary buttons
     public MainMenuPanel(WorkoutPlannerAppGUI mainFrame, WorkoutsMenu menu, JPanel east, CardLayout eastLayout) {
         super(new GridLayout(5, 1, 10, 10));
+        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        setBackground(Color.black);
+        setPreferredSize(new Dimension(300, 500));
         this.east = east;
         this.eastLayout = eastLayout;
         this.menu = menu;
         this.mainFrame = mainFrame;
-        setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5));
-        setBackground(Color.black);
-        setPreferredSize(new Dimension(300, 500));
         createMuscleGroupButton();
         createEditSessionButton();
         createViewSessionButton();
